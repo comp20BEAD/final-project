@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Alata|Nunito|Slabo+27px&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>COMP 20 - FINAL PROJECT</title>
+    <style type="text/css">
+      body, html {
+        background-color: #1c7eed;
+        color: #FFF;
+        font-family: sans-serif;
+      }
+      .container {
+        position: absolute;
+        left: 50%;
+        margin-left: -450px;
+        top: 150px;
+        width: 900px;
+        text-align: center;
+      }
+      #wordsContainer {
+        position: relative;
+        margin-bottom: 30px;
+        margin-top: 80px;
+      }
+      .word {
+        position: relative;
+        display: inline;
+        margin: 0px 10px;
+        text-decoration: none;
+      }
+      h2 {
+        font-size: 40px;
+      }
+      #yourWords {
+      }
+      #answersContainer {
+        position: relative;
+        margin-bottom: 50px;
+      }
+      .answerButton {
+        position: relative;
+        background-color: #78cc3b;
+        border: solid 1px #78cc3b;
+        border-radius: 20px;
+        color: #FFF;
+        padding: 10px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 0px 10px;
+        cursor: pointer;
+      }
+      .answerButton:hover {
+        background: #6bb535;
+        border: solid 1px #6bb535;
+        border-radius: 20px;
+        color: #ebebeb;
+        outline: none;
+      }
+      .answerButton:focus {
+        outline: 0;
+      }
+      .hintButton {
+        position: relative;
+        background-color: #21aded;
+        border: solid 1px #21aded;
+        border-radius: 20px;
+        color: white;
+        padding: 5px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 15px;
+        margin-bottom: 25px;
+        cursor: pointer;
+      }
+      .hintButton:hover {
+        background: #1c9ed9;
+        border: solid 1px #1c9ed9;
+        border-radius: 20px;
+        color: #ebebeb;
+        outline: none;
+      }
+      .hintButton:focus {
+        outline: 0;
+      }
+      #currentScore {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+    </nav>
+    <div class="container">
+      <div id="wordsContainer">
+        <h2><ins class="word" id="word1">word1</ins> and <ins class="word" id="word2">word2</ins> are: </h2>
+      </div>
+      <div id="answersContainer">
+        <input class="answerButton" type="button" value="synonyms" onclick="return answer();">
+        <input class="answerButton" type="button" value="antonyms" onclick="return answer();">
+        <input class="answerButton" type="button" value="neither" onclick="return answer();">
+      </div>
+      <input class="hintButton" type="button" value="hint" onclick="return hint();">
+      <div id="test" style="height: 50px; font-size: 30px;"></div>
+      <div id="scoreContainer">
+        <h3>Your score: <ins id="currentScore">0</ins></h3>
+      </div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+      var array1 = ["BEAUTIFUL", "STUPID", "LOVE", "STRONG", "SHORT", "HAPPY", "SHY", "ROUGH"];
+      var array2 = ["HIDEOUS", "INTELLIGENT", "HATE", "WEAK", "LONG", "SAD", "CONFIDENT", "SMOOTH"];
+      var i = 0;
+      var word1 = document.getElementById("word1");
+      var word2 = document.getElementById("word2");
+
+      function setWords(j) {
+        word1.innerHTML = array1[j];
+        word2.innerHTML = array2[j];
+      }
+
+      setWords(i);
+
+      //var inst = setInterval(demo, 2000); //                                  active demo text
+
+      function demo() {
+        word1.innerHTML = array1[i];
+        word2.innerHTML = array2[i];
+        i++;
+        if (i >= array1.length) {
+          i = 0;
+        }
+      }
+
+      function answer() {
+        i++;
+        display = document.getElementById("test");
+        random = Math.floor((Math.random() * 2));
+        if (random == 0) {
+          display.style.color = "#3ed138";
+          display.innerHTML = "CORRECT +1";
+          var currScore = parseInt(document.getElementById("currentScore").textContent);
+          var newScore = (currScore + 1).toString();
+          document.getElementById("currentScore").innerHTML = newScore;
+        }
+        if (random == 1) {
+          display.style.color = "#f75454";
+          display.innerHTML = "WRONG -1";
+          var currScore = parseInt(document.getElementById("currentScore").textContent);
+          if (currScore > 0) {
+            var newScore = (currScore - 1).toString()
+            document.getElementById("currentScore").innerHTML = newScore;
+          }
+        }
+        if (i >= array1.length) {
+          i = 0;
+        }
+        word1.innerHTML = array1[i];
+        word2.innerHTML = array2[i];
+      }
+
+    </script>
+  </body>
+</html>
