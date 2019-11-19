@@ -12,11 +12,12 @@
         font-family: sans-serif;
       }
       .container {
+        border: solid 2px #fff;
         position: absolute;
         left: 50%;
-        margin-left: -450px;
+        margin-left: -400px;
         top: 150px;
-        width: 900px;
+        width: 800px;
         text-align: center;
       }
       #wordsContainer {
@@ -41,8 +42,8 @@
       }
       .answerButton {
         position: relative;
-        background-color: #78cc3b;
-        border: solid 1px #78cc3b;
+        background-color: #34c6eb;
+        border: solid 1px #34c6eb;
         border-radius: 20px;
         color: #FFF;
         padding: 10px 25px;
@@ -54,8 +55,8 @@
         cursor: pointer;
       }
       .answerButton:hover {
-        background: #6bb535;
-        border: solid 1px #6bb535;
+        background: #2cb2d4;
+        border: solid 1px #2cb2d4;
         border-radius: 20px;
         color: #ebebeb;
         outline: none;
@@ -63,7 +64,8 @@
       .answerButton:focus {
         outline: 0;
       }
-      .hintButton {
+      .nextButton {
+        visibility: hidden;
         position: relative;
         background-color: #21aded;
         border: solid 1px #21aded;
@@ -77,18 +79,34 @@
         margin-bottom: 25px;
         cursor: pointer;
       }
-      .hintButton:hover {
+      .nextButton:hover {
         background: #1c9ed9;
         border: solid 1px #1c9ed9;
         border-radius: 20px;
         color: #ebebeb;
         outline: none;
       }
-      .hintButton:focus {
+      .nextButton:focus {
         outline: 0;
       }
       #currentScore {
         text-decoration: none;
+      }
+      #points {
+        position: absolute;
+        left: 50%;
+        margin-left: -450px;
+        top: 100px;
+        width: 900px;
+        text-align: center;
+      }
+      .wrongButton {
+        background-color: #f75454;
+        border-color: #f75454;
+      }
+      .correctButton {
+        background-color: #3ed138;
+        border-color: #3ed138;
       }
     </style>
   </head>
@@ -100,16 +118,17 @@
         <h2><ins class="word" id="word1">word1</ins> and <ins class="word" id="word2">word2</ins> are: </h2>
       </div>
       <div id="answersContainer">
-        <input class="answerButton" type="button" value="synonyms" onclick="return answer();">
-        <input class="answerButton" type="button" value="antonyms" onclick="return answer();">
-        <input class="answerButton" type="button" value="neither" onclick="return answer();">
+        <input class="answerButton" type="button" value="synonyms" id="synonyms" onclick="return answer('synonyms');">
+        <input class="answerButton" type="button" value="antonyms" id="antonyms" onclick="return answer('antonyms');">
+        <input class="answerButton" type="button" value="neither" id="neither" onclick="return answer('neither');">
       </div>
-      <input class="hintButton" type="button" value="hint" onclick="return hint();">
-      <div id="test" style="height: 50px; font-size: 30px;"></div>
+      <input class="nextButton" id="nextButton" type="button" value="next" onclick="return next();">
+
       <div id="scoreContainer">
         <h3>Your score: <ins id="currentScore">0</ins></h3>
       </div>
     </div>
+    <div id="points" style="height: 50px; font-size: 30px;"></div>
 
     <script language="javascript" type="text/javascript">
       var array1 = ["BEAUTIFUL", "STUPID", "LOVE", "STRONG", "SHORT", "HAPPY", "SHY", "ROUGH"];
@@ -117,6 +136,7 @@
       var i = 0;
       var word1 = document.getElementById("word1");
       var word2 = document.getElementById("word2");
+      var a;
 
       function setWords(j) {
         word1.innerHTML = array1[j];
@@ -136,11 +156,17 @@
         }
       }
 
-      function answer() {
+      function answer(ans) {
+        console.log("ANSWERED");
+        a = ans;
+        document.getElementById("synonyms").disabled = true;
+        document.getElementById("antonyms").disabled = true;
+        document.getElementById("neither").disabled = true;
         i++;
-        display = document.getElementById("test");
+        display = document.getElementById("points");
         random = Math.floor((Math.random() * 2));
         if (random == 0) {
+          $("#" + ans).addClass("correctButton");
           display.style.color = "#3ed138";
           display.innerHTML = "CORRECT +1";
           var currScore = parseInt(document.getElementById("currentScore").textContent);
@@ -148,19 +174,33 @@
           document.getElementById("currentScore").innerHTML = newScore;
         }
         if (random == 1) {
+          $("#" + ans).addClass("wrongButton");
           display.style.color = "#f75454";
           display.innerHTML = "WRONG -1";
           var currScore = parseInt(document.getElementById("currentScore").textContent);
           if (currScore > 0) {
             var newScore = (currScore - 1).toString()
-            document.getElementById("currentScore").innerHTML = newScore;
+            document.getElementById("currentScore").innerHTML = newScore;;
           }
         }
+        document.getElementById("nextButton").style.visibility = "visible";
+
+
+      }
+
+      function next() {
+        $("#" + a).removeClass("wrongButton");
+        $("#" + a).removeClass("correctButton");
+        document.getElementById("synonyms").disabled = false;
+        document.getElementById("antonyms").disabled = false;
+        document.getElementById("neither").disabled = false;
         if (i >= array1.length) {
           i = 0;
         }
         word1.innerHTML = array1[i];
         word2.innerHTML = array2[i];
+        document.getElementById("points").innerHTML = "";
+        document.getElementById("nextButton").style.visibility = "hidden";
       }
 
     </script>
