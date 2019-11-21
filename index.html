@@ -10,6 +10,7 @@
         background-color: #1c7eed;
         color: #FFF;
         font-family: sans-serif;
+        cursor: default;
       }
       .container {
         border: solid 2px #fff;
@@ -22,23 +23,34 @@
       }
       #wordsContainer {
         position: relative;
-        margin-bottom: 30px;
-        margin-top: 80px;
+        margin-bottom: 35px;
+        margin-top: 35px;
       }
       .word {
         position: relative;
         display: inline;
         margin: 0px 10px;
         text-decoration: none;
+        text-align: center;
+      }
+      .word_hover:hover {
+        color: #ffd166;
       }
       h2 {
         font-size: 40px;
       }
-      #yourWords {
+      h3 {
+        font-size: 30px;
+      }
+      h4 {
+        font-size: 23px;
+      }
+      h5 {
+        font-size: 17px;
       }
       #answersContainer {
         position: relative;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
       }
       .answerButton {
         position: relative;
@@ -50,16 +62,16 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 20px;
+        font-size: 23px;
         margin: 0px 10px;
-        cursor: pointer;
       }
-      .answerButton:hover {
+      .answerButton_hover:hover {
         background: #2cb2d4;
         border: solid 1px #2cb2d4;
         border-radius: 20px;
         color: #ebebeb;
         outline: none;
+        cursor: pointer;
       }
       .answerButton:focus {
         outline: 0;
@@ -76,7 +88,7 @@
         text-decoration: none;
         display: inline-block;
         font-size: 15px;
-        margin-bottom: 25px;
+        margin: 10px 0px;
         cursor: pointer;
       }
       .nextButton:hover {
@@ -92,13 +104,20 @@
       #currentScore {
         text-decoration: none;
       }
-      #points {
+      #lives {
+        text-decoration: none;
+      }
+      #feedback {
         position: absolute;
         left: 50%;
         margin-left: -450px;
-        top: 100px;
+        top: 70px;
         width: 900px;
         text-align: center;
+      }
+      #instruct {
+        margin-top: 40px;
+        height: 20px;
       }
       .wrongButton {
         background-color: #f75454;
@@ -108,99 +127,173 @@
         background-color: #3ed138;
         border-color: #3ed138;
       }
+      .definition {
+        position: absolute;
+        left: 50%;
+        margin-left: -300px;
+        top: 295px;
+        width: 600px;
+        height: 95px;
+        background-color: #9fdbf5;
+        visibility: hidden;
+        text-align: center;
+        color: #000;
+        padding: auto;
+        border-radius: 20px;
+      }
     </style>
   </head>
   <body>
-    <nav>
-    </nav>
-    <div class="container">
+    <div class="container" id="container">
+    <div class="container2" id="container2">
+      <h5 id="instruct"></h5>
       <div id="wordsContainer">
-        <h2><ins class="word" id="word1">word1</ins> and <ins class="word" id="word2">word2</ins> are: </h2>
+        <h2><div class="word" id="word1">word1</div> and <div class="word" id="word2">word2</div> are: </h2>
       </div>
       <div id="answersContainer">
-        <input class="answerButton" type="button" value="synonyms" id="synonyms" onclick="return answer('synonyms');">
-        <input class="answerButton" type="button" value="antonyms" id="antonyms" onclick="return answer('antonyms');">
-        <input class="answerButton" type="button" value="neither" id="neither" onclick="return answer('neither');">
+        <input class="answerButton answerButton_hover" type="button" value="synonyms" id="synonyms" onclick="return answer('synonyms');">
+        <input class="answerButton answerButton_hover" type="button" value="antonyms" id="antonyms" onclick="return answer('antonyms');">
+        <input class="answerButton answerButton_hover" type="button" value="neither" id="neither" onclick="return answer('neither');">
       </div>
       <input class="nextButton" id="nextButton" type="button" value="next" onclick="return next();">
 
       <div id="scoreContainer">
-        <h3>Your score: <ins id="currentScore">0</ins></h3>
+        <h3 id="scoreLine">Score: <ins id="currentScore">0</ins></h3>
+        <h4>Lives: <ins id="lives">3</ins></h4>
       </div>
     </div>
-    <div id="points" style="height: 50px; font-size: 30px;"></div>
+    </div>
+    <h2 id="feedback" style="height: 50px; font-size: 30px;"></h2>
+    <div class="definition" id="definition"></div>
 
     <script language="javascript" type="text/javascript">
-      var array1 = ["BEAUTIFUL", "STUPID", "LOVE", "STRONG", "SHORT", "HAPPY", "SHY", "ROUGH"];
-      var array2 = ["HIDEOUS", "INTELLIGENT", "HATE", "WEAK", "LONG", "SAD", "CONFIDENT", "SMOOTH"];
-      var i = 0;
+      var words = ["BEAUTIFUL", "GORGEOUS", "STUPID", "LOVE", "GENTLE", "STRONG", "SHORT", "HAPPY", "SHY", "ROUGH",
+                   "HIDEOUS", "INTELLIGENT", "HATE", "WEAK", "LONG", "SAD", "CONFIDENT", "POLITE", "RUDE", "SILLY",
+                   "SERIOUS", "WILD", "TAME", "DAMP", "DRY", "RAISE", "LOWER"];
+      var usedWords = [];
       var word1 = document.getElementById("word1");
       var word2 = document.getElementById("word2");
       var a;
+      var currScore;
+      var currLives;
+      var synDisplay = document.getElementById("synonyms");
+      var antDisplay = document.getElementById("antonyms");
+      var neiDisplay = document.getElementById("neither");
+      var nextDisplay = document.getElementById("nextButton");
+      var defDisplay = document.getElementById("definition");
+      var defText;
+      var w1choose = "";
+      var w2choose = "";
+      console.log("before setWords(): w1:" + w1choose + " w2:" + w2choose);
 
-      function setWords(j) {
-        word1.innerHTML = array1[j];
-        word2.innerHTML = array2[j];
+      function setWords() {
+          w1choose = words[Math.floor(Math.random() * words.length)];
+          w2choose = words[Math.floor(Math.random() * words.length)];
+          while (w2choose == w1choose) {
+            w2choose = words[Math.floor(Math.random() * words.length)];
+          }
+          console.log(w1choose + " " + w2choose)
+          if (usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
+            setWords();
+          }
+          console.log("after setWords(): w1:" + w1choose + " w2:" + w2choose);
+          word1.innerHTML = w1choose;
+          word2.innerHTML = w2choose;
+          usedWords.push(w1choose);
+          usedWords.push(w2choose);
+        }
+
+
+      setWords();
+
+      var showDef1 = function() {
+        $.ajax({
+          type: "GET",
+          url: "https://www.dictionaryapi.com/api/v3/references/sd3/json/" + word1.textContent + "?key=0cc19283-5820-4117-ac77-7808446a4cc6",
+          dataType: 'json',
+        }).done(function(data) {
+          defText = JSON.stringify(data[0].shortdef[0]).replace(/\"/g, "");
+          defDisplay.innerHTML = "<h4 class='definitionText'>" + defText + "</h4>";
+          defDisplay.style.visibility = "visible";
+        })
       }
 
-      setWords(i);
-
-      //var inst = setInterval(demo, 2000); //                                  active demo text
-
-      function demo() {
-        word1.innerHTML = array1[i];
-        word2.innerHTML = array2[i];
-        i++;
-        if (i >= array1.length) {
-          i = 0;
-        }
+      var showDef2 = function() {
+        $.ajax({
+          type: "GET",
+          url: "https://www.dictionaryapi.com/api/v3/references/sd3/json/" + word2.textContent + "?key=0cc19283-5820-4117-ac77-7808446a4cc6",
+          dataType: 'json',
+        }).done(function(data) {
+          defText = JSON.stringify(data[0].shortdef[0]).replace(/\"/g, "");
+          defDisplay.innerHTML = "<h4 class='definitionText'>" + defText + "</h4>";
+          defDisplay.style.visibility = "visible";
+        })
       }
 
       function answer(ans) {
-        console.log("ANSWERED");
         a = ans;
-        document.getElementById("synonyms").disabled = true;
-        document.getElementById("antonyms").disabled = true;
-        document.getElementById("neither").disabled = true;
-        i++;
-        display = document.getElementById("points");
+        synDisplay.disabled = true;
+        antDisplay.disabled = true;
+        neiDisplay.disabled = true;
+        $("#synonyms").removeClass("answerButton_hover");
+        $("#antonyms").removeClass("answerButton_hover");
+        $("#neither").removeClass("answerButton_hover");
+        document.getElementById("instruct").innerHTML = "Hover over the words for their definitions!";
+
+        $(".word").addClass("word_hover");
+        word1.addEventListener("mouseover", showDef1);
+        word2.addEventListener("mouseover", showDef2);
+        $(".word").mouseout(function(){
+          defDisplay.style.visibility = "hidden";
+        })
+
+        display = document.getElementById("feedback");
         random = Math.floor((Math.random() * 2));
         if (random == 0) {
           $("#" + ans).addClass("correctButton");
           display.style.color = "#3ed138";
-          display.innerHTML = "CORRECT +1";
-          var currScore = parseInt(document.getElementById("currentScore").textContent);
+          display.innerHTML = "CORRECT";
+          currScore = parseInt(document.getElementById("currentScore").textContent);
           var newScore = (currScore + 1).toString();
           document.getElementById("currentScore").innerHTML = newScore;
+          nextDisplay.style.visibility = "visible";
         }
         if (random == 1) {
           $("#" + ans).addClass("wrongButton");
           display.style.color = "#f75454";
-          display.innerHTML = "WRONG -1";
-          var currScore = parseInt(document.getElementById("currentScore").textContent);
-          if (currScore > 0) {
-            var newScore = (currScore - 1).toString()
-            document.getElementById("currentScore").innerHTML = newScore;;
+          display.innerHTML = "WRONG";
+          currLives = parseInt(document.getElementById("lives").textContent);
+          currLives--;
+          if (currLives > 0) {                                                  // More than 0 lives, keep playing
+            document.getElementById("lives").innerHTML = currLives;
+            nextDisplay.style.visibility = "visible";
+          } else {
+            document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
+            nextDisplay.value = "continue";
+            nextDisplay.onclick = "";
+            nextDisplay.style.visibility = "visible";
+            var finalScore = parseInt(document.getElementById("currentScore").textContent);
+            document.getElementById("scoreLine").innerHTML = "GAME OVER! Final score: " + finalScore;
           }
         }
-        document.getElementById("nextButton").style.visibility = "visible";
-
-
       }
 
       function next() {
-        $("#" + a).removeClass("wrongButton");
-        $("#" + a).removeClass("correctButton");
-        document.getElementById("synonyms").disabled = false;
-        document.getElementById("antonyms").disabled = false;
-        document.getElementById("neither").disabled = false;
-        if (i >= array1.length) {
-          i = 0;
-        }
-        word1.innerHTML = array1[i];
-        word2.innerHTML = array2[i];
-        document.getElementById("points").innerHTML = "";
-        document.getElementById("nextButton").style.visibility = "hidden";
+        word1.removeEventListener("mouseover", showDef1);
+        word2.removeEventListener("mouseover", showDef2);
+        document.getElementById("instruct").innerHTML = "";
+        $(".word").removeClass("word_hover")
+        $("#" + a).removeClass("wrongButton");                                 // Hide feedback
+        $("#" + a).removeClass("correctButton");                               // Hide feedback
+        $("#synonyms").addClass("answerButton_hover");                         // Allow hover on answerButtons
+        $("#antonyms").addClass("answerButton_hover");                         // Allow hover on answerButtons
+        $("#neither").addClass("answerButton_hover");                          // Allow hover on answerButtons
+        synDisplay.disabled = false;                                           // answerButtons clickable again
+        antDisplay.disabled = false;                                           // answerButtons clickable again
+        neiDisplay.disabled = false;                                           // answerButtons clickable again
+        setWords();
+        document.getElementById("feedback").innerHTML = "";
+        nextDisplay.style.visibility = "hidden";
       }
 
     </script>
