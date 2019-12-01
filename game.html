@@ -140,9 +140,33 @@
         padding: auto;
         border-radius: 20px;
       }
+      .homeButton {
+        position: absolute;
+        background-color: #34c6eb;
+        border: solid 1px #34c6eb;
+        border-radius: 20px;
+        color: #FFF;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        width: 80px;
+        margin-left: 30px;
+        margin-top: 30px;
+        font-size: 15px;
+      }
+      .homeButton_hover:hover {
+        background: #2cb2d4;
+        border: solid 1px #2cb2d4;
+        border-radius: 20px;
+        color: #ebebeb;
+        outline: none;
+        cursor: pointer;
+      }
+
     </style>
   </head>
   <body>
+    <input class="homeButton homeButton_hover" type="button" value="HOME" id="home" onclick="window.location.href = 'index.html';">
     <div class="container" id="container">
     <div class="container2" id="container2">
       <h5 id="instruct"></h5>
