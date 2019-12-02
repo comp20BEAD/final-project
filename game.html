@@ -3,26 +3,27 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Alata|Nunito|Slabo+27px&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <title>COMP 20 - FINAL PROJECT</title>
     <style type="text/css">
       body, html {
-        background-color: #1c7eed;
+        background-color: #454545;
         color: #FFF;
-        font-family: sans-serif;
+        font-family: 'Roboto', sans-serif;
         cursor: default;
       }
       .container {
         position: absolute;
         left: 50%;
-        margin-left: -400px;
+        margin-left: -500px;
         top: 150px;
-        width: 800px;
+        width: 1000px;
         text-align: center;
       }
       #wordsContainer {
         position: relative;
-        margin-bottom: 110px;
+        margin-bottom: 120px;
         margin-top: 35px;
       }
       .word {
@@ -52,23 +53,27 @@
         margin-bottom: 30px;
       }
       .answerButton {
-        position: relative;
-        background-color: #34c6eb;
-        border: solid 1px #34c6eb;
-        border-radius: 20px;
+        width: 15%;
+        /*color: #f7f7f7;*/
         color: #FFF;
-        padding: 10px 25px;
+        position: relative;
+        /*background-color: #9000ff;
+        border: solid 3px #9000ff;*/
+        background-color: #1f1f1f;
+        border: solid 3px #1f1f1f;
+        border-radius: 20px;
+        padding: 16px 24px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 23px;
+        font-size: 16pt;
         margin: 0px 10px;
       }
       .answerButton_hover:hover {
-        background: #2cb2d4;
-        border: solid 1px #2cb2d4;
+        background: #808080;
+        border: solid 3px #808080;
         border-radius: 20px;
-        color: #ebebeb;
+        color: #f7f7f7;
         outline: none;
         cursor: pointer;
       }
@@ -76,13 +81,14 @@
         outline: 0;
       }
       .nextButton {
+        font-size: 12pt;
+        padding: 12px 24px;
         visibility: hidden;
         position: relative;
-        background-color: #21aded;
-        border: solid 1px #21aded;
-        border-radius: 20px;
-        color: white;
-        padding: 5px 15px;
+        background-color: #ad42ff;
+        border: solid 1px #ad42ff;
+        color: #f7f7f7;
+        border-radius: 15px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -91,9 +97,9 @@
         cursor: pointer;
       }
       .nextButton:hover {
-        background: #1c9ed9;
-        border: solid 1px #1c9ed9;
-        border-radius: 20px;
+        background: #9000ff;
+        border: solid 1px #9000ff;
+        border-radius: 15px;
         color: #ebebeb;
         outline: none;
       }
@@ -107,10 +113,11 @@
         text-decoration: none;
       }
       #feedback {
+        font-family: 'Roboto', sans-serif;
         position: absolute;
         left: 50%;
         margin-left: -450px;
-        top: 70px;
+        top: 230px;
         width: 900px;
         text-align: center;
       }
@@ -119,31 +126,30 @@
         height: 20px;
       }
       .wrongButton {
-        background-color: #f75454;
-        border-color: #f75454;
+        background-color: #d90024;
+        border-color: #d90024;
       }
       .correctButton {
-        background-color: #3ed138;
-        border-color: #3ed138;
+        background-color: #14b000;
+        border-color: #14b000;
       }
       .definition {
         position: absolute;
         left: 50%;
-        margin-left: -300px;
+        margin-left: -315px;
         top: 295px;
-        width: 600px;
+        width: 630px;
         height: 95px;
-        background-color: #9fdbf5;
+        background-color: #bdbdbd;
         visibility: hidden;
         text-align: center;
-        color: #000;
-        padding: auto;
+        color: #242424;
         border-radius: 20px;
       }
       .homeButton {
         position: absolute;
-        background-color: #34c6eb;
-        border: solid 1px #34c6eb;
+        background-color: #878787;
+        border: solid 1px #878787;
         border-radius: 20px;
         color: #FFF;
         padding: 10px 10px;
@@ -155,10 +161,10 @@
         font-size: 15px;
       }
       .homeButton_hover:hover {
-        background: #2cb2d4;
-        border: solid 1px #2cb2d4;
+        background: #a3a3a3;
+        border: solid 1px #a3a3a3;
         border-radius: 20px;
-        color: #ebebeb;
+        color: #FFF;
         outline: none;
         cursor: pointer;
       }
@@ -174,26 +180,26 @@
         <h2><div class="word" id="word1">word1</div> and <div class="word" id="word2">word2</div> are: </h2>
       </div>
       <div id="answersContainer">
-        <input class="answerButton answerButton_hover" type="button" value="synonyms" id="synonyms" onclick="return answer(this.id);">
-        <input class="answerButton answerButton_hover" type="button" value="antonyms" id="antonyms" onclick="return answer(this.id);">
-        <input class="answerButton answerButton_hover" type="button" value="neither" id="neither" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Synonyms" id="synonyms" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Antonyms" id="antonyms" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Neither" id="neither" onclick="return answer(this.id);">
       </div>
-      <input class="nextButton" id="nextButton" type="button" value="next" onclick="return next();">
-
+      <input class="nextButton" id="nextButton" type="button" value="Continue" onclick="return next();">
       <div id="scoreContainer">
         <h3 id="scoreLine">Score: <ins id="currentScore">0</ins></h3>
         <h4>Lives: <ins id="lives">3</ins></h4>
       </div>
     </div>
     </div>
-    <h2 id="feedback" style="height: 50px; font-size: 30px;"></h2>
+    <h2 id="feedback" style="height: 50px; font-size: 80px;"></h2>
     <div class="definition" id="definition"></div>
 
     <script language="javascript" type="text/javascript">
-      /*var words = ["BEAUTIFUL", "GORGEOUS", "STUPID", "LOVE", "GENTLE", "STRONG", "SHORT", "HAPPY", "SHY", "ROUGH",
-                   "HIDEOUS", "INTELLIGENT", "HATE", "WEAK", "LONG", "SAD", "CONFIDENT", "POLITE", "RUDE", "SILLY",
-                   "SERIOUS", "WILD", "TAME", "DAMP", "DRY", "RAISE", "LOWER"];*/
-      var words = ["BEAUTIFUL", "GORGEOUS", "HAPPY", "SAD", "UGLY", "UNHAPPY", "UNATTRACTIVE", "ATTRACTIVE", "HANDSOME", "CUTE"];
+      var words = ["POLITE","BEAUTIFUL", "GORGEOUS", "HAPPY", "SAD", "UGLY",
+                  "UNHAPPY", "UNATTRACTIVE", "ATTRACTIVE", "HANDSOME", "CUTE",
+                  "SMART", "STUPID", "BIG", "TINY", "HUGE", "LUCKY", "UNLUCKY",
+                  "FUN", "SCARY", "DUMB", "DIFFICULT", "EASY", "PLEASANT",
+                  "EXCITED", "PATHETIC", "HONORABLE"];
       var usedWords = [];
       var word1 = document.getElementById("word1");
       var word2 = document.getElementById("word2");
@@ -213,30 +219,58 @@
       function setWords() {
           document.getElementById("feedback").innerHTML = "";
           console.log("setWords started");
-          w1choose = words[Math.floor(Math.random() * words.length)];
-          w2choose = words[Math.floor(Math.random() * words.length)];
-          console.log("First words picked: " + w1choose + " and " + w2choose);
-          while (w2choose == w1choose || usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
-            w1choose = words[Math.floor(Math.random() * words.length)];
-            w2choose = words[Math.floor(Math.random() * words.length)];
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            dataType: 'json',
+            success: function(data) {
+              w1choose = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase();
+            },
+            async: false
+          });
+          var pick = Math.floor(Math.random() * 3) + 1;
+          if (pick == 1) {
+            if (synsExist(w1choose)) {
+              w2choose = pickSynonym(w1choose);
+              correctAnswer = "SYNONYMS";
+            } else {
+              pick = 3;
+            }
           }
-          /*while (w2choose == w1choose) {
-            w2choose = words[Math.floor(Math.random() * words.length)];
+          if (pick == 2) {
+            if (antsExist(w1choose)) {
+              w2choose = pickAntonym(w1choose);
+              correctAnswer = "ANTONYMS";
+            } else {
+              pick = 3;
+            }
           }
-          if (usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
-            setWords();
-          }*/
-          console.log("Words picked: " + w1choose + " and " + w2choose);
-          console.log("Checking if " + w1choose + " and " + w2choose + " are ants/syns/neither");
-          if (areAntonyms(w1choose, w2choose)) {
-            console.log(w1choose + " and " + w2choose + " are antonyms");
-            correctAnswer = "ANTONYMS";
-          } else if (areSynonyms(w1choose, w2choose)) {
-            console.log(w1choose + " and " + w2choose + " are synonyms");
-            correctAnswer = "SYNONYMS";
-          } else {
-            console.log(w1choose + " and " + w2choose + " are neither");
+          if (pick == 3) {
+            w2choose = pickNeither(w1choose);
             correctAnswer = "NEITHER";
+          }
+          while (usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
+            if (pick == 1) {
+              if (typeof pickSynonym(w1choose) !== "undefined") {
+                w2choose = pickSynonym(w1choose);
+                correctAnswer = "SYNONYMS";
+              } else {
+                pick = 3;
+              }
+            }
+            if (pick == 2) {
+              if (typeof pickAntonym(w1choose) !== "undefined") {
+                w2choose = pickAntonym(w1choose);
+                correctAnswer = "ANTONYMS";
+              } else {
+                pick = 3;
+              }
+            }
+            if (pick == 3) {
+              console.log("NEITHER");
+              w2choose = pickNeither(w1choose);
+              correctAnswer = "NEITHER";
+            }
           }
           word1.innerHTML = w1choose;
           word2.innerHTML = w2choose;
@@ -246,92 +280,137 @@
           console.log("correctAnswer: " + correctAnswer);
         }
 
-        function areAntonyms(w1, w2) {
-          var isAntonym = false;
+        function synsExist(w) {
+          var b = false;
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w1+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
             dataType: 'json',
             success: function(data) {
-              console.log(w1 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
-              w1 = w1.toLowerCase();
-              w2 = w2.toLowerCase();
-              if ((data[0].meta.ants.status === undefined)) {
-                if (data[0].meta.ants[0].includes(w2)) {
-                  isAntonym = true;
-                  console.log(w1 + " and " + w2 + " are antonyms");
-                  console.log("isAntonym: " + isAntonym);
-                }
+              if (data[0].meta.syns.status === undefined) {
+                b = true;
               }
             },
-            //error: document.write("error"),
             async: false
           });
-          $.ajax({
-            type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w2+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
-            dataType: 'json',
-            success: function(data) {
-              console.log(w2 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
-              w1 = w1.toLowerCase();
-              w2 = w2.toLowerCase();
-              if ((data[0].meta.ants.status === undefined)) {
-                if (data[0].meta.ants[0].includes(w1)) {
-                  isAntonym = true;
-                  console.log(w1 + " and " + w2 + " are antonyms");
-                  console.log("isAntonym: " + isAntonym);
-                }
-              }
-            },
-            //error: document.write("error"),
-            async: false
-          });
-          console.log("areAntonyms end: isAntonym: " + isAntonym);
-          return isAntonym;
+          return b;
         }
 
-        function areSynonyms(w1, w2) {
-          var isSynonym = false;
+        function antsExist(w) {
+          var b = false;
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w1+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
             dataType: 'json',
             success: function(data) {
-              console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
-              w1 = w1.toLowerCase();
-              w2 = w2.toLowerCase();
-              if ((data[0].meta.syns.status === undefined)) {
-                if (data[0].meta.syns[0].includes(w2)) {
-                  isSynonym = true;
-                  console.log(w1 + " and " + w2 + " are synonyms");
-                  console.log("isSynonym: " + isSynonym);
-                }
+              if (data[0].meta.ants.status === undefined) {
+                b = true;
               }
             },
-            //error: document.write("error"),
+            async: false
+          });
+          return b;
+        }
+
+        function pickSynonym(w) {
+          var s;
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            dataType: 'json',
+            success: function(data) {
+              s = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase();
+              console.log(w + " syns: " + JSON.stringify(data[0].meta.syns[0]));
+            },
+            async: false
+          });
+          return s;
+        }
+
+        function pickAntonym(w) {
+          var a;
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            dataType: 'json',
+            success: function(data) {
+              a = data[0].meta.ants[0][Math.floor(Math.random() * data[0].meta.ants[0].length)].toUpperCase();
+              console.log(w + " ants: " + JSON.stringify(data[0].meta.ants[0]));
+            },
+            async: false
+          });
+          return a;
+        }
+
+        function pickNeither(w) {
+          var n;
+          var random = Math.floor(Math.random() * 2) + 1;
+          if (random == 1) {
+            $.ajax({
+              type: "GET",
+              url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+              dataType: 'json',
+              success: function(data) {
+                if (data[0].meta.syns.status === undefined) {
+                  n = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase();
+                }
+              },
+              async: false
+            });
+          }
+          if (random == 2) {
+            $.ajax({
+              type: "GET",
+              url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+              dataType: 'json',
+              success: function(data) {
+                if (data[0].meta.syns.status === undefined) {
+                  n = data[0].meta.ants[0][Math.floor(Math.random() * data[0].meta.ants[0].length)].toUpperCase()
+                }
+              },
+              async: false
+            });
+          }
+          var syns = [];
+          var ants = [];
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            dataType: 'json',
+            success: function(data) {
+              if (data[0].meta.ants.status !== undefined) {
+                ants = data[0].meta.ants[0];
+              }
+            },
             async: false
           });
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w2+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
             dataType: 'json',
             success: function(data) {
-              console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
-              w1 = w1.toLowerCase();
-              w2 = w2.toLowerCase();
-              if ((data[0].meta.syns.status === undefined)) {
-                if (data[0].meta.syns[0].includes(w1)) {
-                  isSynonym = true;
-                  console.log(w1 + " and " + w2 + " are synonyms");
-                  console.log("isSynonym: " + isSynonym);
-                }
+              if (data[0].meta.syns.status !== undefined) {
+                syns = data[0].meta.syns[0];
               }
             },
-            //error: document.write("error"),
             async: false
           });
-          console.log("areSynonyms end: isSynonym: " + isSynonym);
-          return isSynonym;
+          if ((syns.length > 0) && (ants.length > 0)) {
+            while (syns.includes(n) || ants.includes(n)) {
+              $.ajax({
+                type: "GET",
+                url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+                dataType: 'json',
+                success: function(data) {
+                  n = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase()
+                },
+                async: false
+              });
+            }
+          } else {
+            n = words[Math.floor(Math.random() * words.length)].toUpperCase();
+          }
+          return n;
         }
 
       setWords();
@@ -361,6 +440,7 @@
       }
 
       function answer(ansId) {
+        $("#"+correctAnswer.toLowerCase()).addClass("correctButton");
         a = ansId;
         synDisplay.disabled = true;
         antDisplay.disabled = true;
@@ -380,8 +460,9 @@
         display = document.getElementById("feedback");
         if (a == correctAnswer.toLowerCase()) {
           $("#" + a).addClass("correctButton");
-          display.style.color = "#3ed138";
-          display.innerHTML = "CORRECT";
+          display.style.color = "#14b000";
+          //display.innerHTML = "CORRECT";
+          display.innerHTML = "✅";
           currScore = parseInt(document.getElementById("currentScore").textContent);
           var newScore = (currScore + 1).toString();
           document.getElementById("currentScore").innerHTML = newScore;
@@ -389,8 +470,9 @@
         }
         else {
           $("#" + a).addClass("wrongButton");
-          display.style.color = "#f75454";
-          display.innerHTML = "WRONG";
+          display.style.color = "#d90024";
+          //display.innerHTML = "WRONG";
+          display.innerHTML = "❌";
           currLives = parseInt(document.getElementById("lives").textContent);
           currLives--;
           if (currLives > 0) {                                                  // More than 0 lives, keep playing
@@ -398,8 +480,7 @@
             nextDisplay.style.visibility = "visible";
           } else {
             document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
-            nextDisplay.value = "continue";
-            nextDisplay.onclick = "";
+            nextDisplay.onclick = "";                                          //show gameover screen on click
             nextDisplay.style.visibility = "visible";
             var finalScore = parseInt(document.getElementById("currentScore").textContent);
             document.getElementById("scoreLine").innerHTML = "GAME OVER! Final score: " + finalScore;
@@ -421,6 +502,7 @@
         antDisplay.disabled = false;                                           // answerButtons clickable again
         neiDisplay.disabled = false;                                           // answerButtons clickable again
         nextDisplay.style.visibility = "hidden";
+        $("#"+correctAnswer.toLowerCase()).removeClass("correctButton");
         setWords();
       }
 
