@@ -2,7 +2,6 @@
 <html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Alata|Nunito|Slabo+27px&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <title>COMP 20 - FINAL PROJECT</title>
@@ -222,7 +221,7 @@
           console.log("setWords started");
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               w1choose = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase();
@@ -268,8 +267,7 @@
               }
             }
             if (pick == 3) {
-                            correctAnswer = "NEITHER";
-              console.log("NEITHER");
+              correctAnswer = "NEITHER";
               w2choose = pickNeither(w1choose);
               if (areSynonyms(w1choose, w2choose)) {
                 correctAnswer = "SYNONYMS";
@@ -330,10 +328,11 @@
         }
 
         function pickSynonym(w) {
+          console.log("pickSynonym");
           var s;
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key="+"22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               s = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)].toUpperCase();
@@ -345,10 +344,11 @@
         }
 
         function pickAntonym(w) {
+          console.log("pickAntonym");
           var a;
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key="+"22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               a = data[0].meta.ants[0][Math.floor(Math.random() * data[0].meta.ants[0].length)].toUpperCase();
@@ -360,10 +360,11 @@
         }
 
         function pickNeither(w) {
+          console.log("pickNeither");
           var n;
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               if (data[0].meta.syns.status === undefined) {
@@ -376,7 +377,7 @@
           var ants = [];
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               if (data[0].meta.ants.status !== undefined) {
@@ -387,7 +388,7 @@
           });
           $.ajax({
             type: "GET",
-            url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
               if (data[0].meta.syns.status !== undefined) {
@@ -400,7 +401,7 @@
             while (syns.includes(n) || ants.includes(n)) {
               $.ajax({
                 type: "GET",
-                url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+                url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
                 dataType: 'json',
                 success: function(data) {
                   n = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)];
@@ -511,7 +512,7 @@
         var isAntonym = false;
         $.ajax({
           type: "GET",
-          url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w1+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+          url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
             console.log(w1 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
@@ -530,7 +531,7 @@
         });
         $.ajax({
           type: "GET",
-          url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w2+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+          url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
             console.log(w2 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
@@ -555,7 +556,7 @@
         var isSynonym = false;
         $.ajax({
           type: "GET",
-          url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w1+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+          url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
             console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
@@ -574,7 +575,7 @@
         });
         $.ajax({
           type: "GET",
-          url: "https://www.dictionaryapi.com/api/v3/references/ithesaurus/json/"+w2+"?key=5743579d-10d9-4c59-b64a-ea084c35533e",
+          url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
             console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
