@@ -3,13 +3,14 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Alata|Nunito|Slabo+27px&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <title>COMP 20 - FINAL PROJECT</title>
     <style type="text/css">
       body, html {
-        background-color: #1c7eed;
+        background-color: #454545;
         color: #FFF;
-        font-family: sans-serif;
+        font-family: 'Roboto', sans-serif;
         cursor: default;
       }
       .container {
@@ -85,11 +86,11 @@
 .contButton {
   position: absolute;
   left: 50%;
-  background-color: #34c6eb;
-  border: solid 1px #34c6eb;
-  border-radius: 20px;
-  color: #FFF;
-  padding: 10px 15px;
+  background-color: #ad42ff;
+  border: solid 1px #ad42ff;
+  color: #f7f7f7;
+  border-radius: 15px;
+  padding: 12px 24px;
   text-align: center;
   text-decoration: none;
   width: 150px;
@@ -98,17 +99,18 @@
   font-size: 23px;
 }
 .contButton_hover:hover {
-  background: #2cb2d4;
-  border: solid 1px #2cb2d4;
-  border-radius: 20px;
+  background: #9000ff;
+  border: solid 1px #9000ff;
+  border-radius: 15px;
   color: #ebebeb;
   outline: none;
   cursor: pointer;
 }
     </style>
   </head>
-  <h1 align="center" style="font-size: 60px">What's the Relationship? Word Game<h1>
-  <h5 align="center" style="color:#000">Designed by Eric Duanmu, Angela Maliakal, Daniel Lee, and Brian Savage<h5>
+  <h1 align="center" style="font-size: 60px">Onym Words: A Vocab Game<h1>
+  <h4 align="center" style="color:#e6e6e6">Designed by Eric Duanmu, Angela Maliakal, Daniel Lee, and Brian Savage</h4>
+  <h5 align="center" style="color:#e6e6e6">Featuring the Merriam-Webster Collegiate Thesaurus and Dictionary APIs</h5>
 <div class="flip-card">
   <div class="flip-card-inner">
     <div class="flip-card-front">
@@ -124,6 +126,6 @@
     </div>
   </div>
 </div>
-  <input class="contButton contButton_hover" type="button" value="CONTINUE" id="continue" onclick="window.location.href = 'game.html';">
+  <input class="contButton contButton_hover" type="button" value="Continue" id="continue" onclick="window.location.href = 'game.html';">
 
 </html>
