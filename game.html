@@ -228,8 +228,7 @@
             },
             async: false
           });
-          //var pick = Math.floor(Math.random() * 3) + 1;
-          var pick = 3;
+          var pick = Math.floor(Math.random() * 3) + 1;
           if (pick == 1) {
             if (synsExist(w1choose)) {
               w2choose = pickSynonym(w1choose);
@@ -572,7 +571,6 @@
               }
             }
           },
-          //error: document.write("error"),
           async: false
         });
         $.ajax({
@@ -590,7 +588,6 @@
               }
             }
           },
-          //error: document.write("error"),
           async: false
         });
         console.log("areSynonyms end: isSynonym: " + isSynonym);
