@@ -199,7 +199,7 @@
                   "SMART", "STUPID", "BIG", "TINY", "HUGE", "LUCKY", "UNLUCKY",
                   "FUN", "SCARY", "DUMB", "DIFFICULT", "EASY", "PLEASANT",
                   "EXCITED", "PATHETIC", "HONORABLE", "WRONG", "CORRECT", "MANY",
-                  "HIGH", "DARK", "ELEGANT"];
+                  "HIGH", "DARK", "ELEGANT", "SIMPLE", "LOUD", "QUIET"];
       var usedWords = [];
       var word1 = document.getElementById("word1");
       var word2 = document.getElementById("word2");
@@ -277,8 +277,6 @@
               }
             }
           }
-          word1.innerHTML = w1choose;
-          word2.innerHTML = w2choose;
           if (word2.textContent == "undefined") {
             w2choose = pickNeither(w1choose);
             correctAnswer = "NEITHER";
@@ -289,6 +287,8 @@
               correctAnswer = "ANTONYMS";
             }
           }
+          word1.innerHTML = w1choose;
+          word2.innerHTML = w2choose;
           usedWords.push(w1choose);
           usedWords.push(w2choose);
           console.log("usedWords: " + JSON.stringify(usedWords));
@@ -515,7 +515,6 @@
           url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
-            console.log(w1 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
             w1 = w1.toLowerCase();
             w2 = w2.toLowerCase();
             if ((data[0].meta.ants.status === undefined)) {
@@ -526,7 +525,6 @@
               }
             }
           },
-          //error: document.write("error"),
           async: false
         });
         $.ajax({
@@ -534,7 +532,6 @@
           url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
-            console.log(w2 + " antonyms:" + JSON.stringify(data[0].meta.ants[0]).replace(/\"/g, ""));
             w1 = w1.toLowerCase();
             w2 = w2.toLowerCase();
             if ((data[0].meta.ants.status === undefined)) {
@@ -545,7 +542,6 @@
               }
             }
           },
-          //error: document.write("error"),
           async: false
         });
         console.log("areAntonyms end: isAntonym: " + isAntonym);
