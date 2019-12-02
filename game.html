@@ -228,7 +228,8 @@
             },
             async: false
           });
-          var pick = Math.floor(Math.random() * 3) + 1;
+          //var pick = Math.floor(Math.random() * 3) + 1;
+          var pick = 3;
           if (pick == 1) {
             if (synsExist(w1choose)) {
               w2choose = pickSynonym(w1choose);
@@ -246,8 +247,14 @@
             }
           }
           if (pick == 3) {
-            w2choose = pickNeither(w1choose);
             correctAnswer = "NEITHER";
+            w2choose = pickNeither(w1choose);
+            if (areSynonyms(w1choose, w2choose)) {
+              correctAnswer = "SYNONYMS";
+            }
+            if (areAntonyms(w1choose, w2choose)) {
+              correctAnswer = "ANTONYMS";
+            }
           }
           while (usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
             if (pick == 1) {
@@ -555,7 +562,6 @@
           url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
-            console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
             w1 = w1.toLowerCase();
             w2 = w2.toLowerCase();
             if ((data[0].meta.syns.status === undefined)) {
@@ -574,7 +580,6 @@
           url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
           dataType: 'json',
           success: function(data) {
-            console.log(w1 + " synonyms:" + JSON.stringify(data[0].meta.syns[0]).replace(/\"/g, ""));
             w1 = w1.toLowerCase();
             w2 = w2.toLowerCase();
             if ((data[0].meta.syns.status === undefined)) {
