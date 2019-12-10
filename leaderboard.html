@@ -2,66 +2,99 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Alata|Nunito|Slabo+27px&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
         <meta charset="utf-8">
         <title>COMP 20 - FINAL PROJECT</title>
         <style type="text/css">
-            body, html {
-            background-color: #1c7eed;
-            color: #FFF;
-            font-family: sans-serif;
-            cursor: default;
+        body, html {
+          background-color: #454545;
+          color: #FFF;
+          font-family: 'Roboto', sans-serif;
+          cursor: default;
         }
         .leadersBox {
-            margin-top: 3%;
+            margin-top: 150px;
             padding: 15px;
             width: 60%;
-            background-color: #FFF;
-            font-family: Alata;
+            font-family: 'Roboto', sans-serif;
+        }
+        .title {
+          width: 400px;
+          height: 15px;
+        }
+        #name {
+          float: left;
+          margin-left: 15px;
+        }
+        #score {
+          float: right;
+          margin-right: 15px;
         }
         .leader {
             color: #FFF;
-            background-color: #770FD6;
-            border-style: groove;
-            border-width: 3px;
-            border-color: #770FD6;
-            width: 40%;
-            height: 27px;
-            margin: 17px;
+            background-color: #9a5ed1;
+            border: solid 5px #9a5ed1;
+            width: 400px;
+            height: 30px;
+            margin: 15px;
             padding-top: 2px;
         }
-        .leader:hover {
-            color: #A3F711;
-            background-color: #1c7eed;
-            border-style: solid;
-            border-width: 3px;
-            border-color: #0FD679;
-            width: 50%;
-            height: 35px;
-            margin: 17px;
-            padding-top: 10px;
-
+        #firstPlace {
+          border: solid 4px #ffd000;
         }
-        .button {
-            width: 100px;
-            margin: 10px;
-            padding: 8px;
-            background-color: #FFF;
-            color: #770FD6;
-            text-decoration: none;
-            font-family: Alata;
-            text-align: center;
+        #secondPlace {
+          border: solid 4px #ebebeb;
         }
-        .button:hover {
-            width: 100px;
-            margin: 10px;
-            padding: 8px;
-            background-color: #770FD6;
-            color: #FFF;
-            text-decoration: none;
-            text-align: center;
-            font-family: Alata;
-            text-align: center;
+        #thirdPlace {
+          border: solid 4px #CD7F32;
+        }
+        .homeButton {
+          position: absolute;
+          background-color: #878787;
+          border: solid 1px #878787;
+          border-radius: 20px;
+          color: #FFF;
+          padding: 10px 10px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 12px;
+          width: 110px;
+          height: 40px;
+          left: 50%;
+          margin-left: -55px;
+          top: 30px;
+        }
+        .homeButton_hover:hover {
+          background: #a3a3a3;
+          border: solid 1px #a3a3a3;
+          border-radius: 20px;
+          color: #FFF;
+          outline: none;
+          cursor: pointer;
+        }
+        .playButton {
+          position: absolute;
+          background-color: #878787;
+          border: solid 1px #878787;
+          border-radius: 20px;
+          color: #FFF;
+          padding: 10px 10px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 12px;
+          width: 110px;
+          height: 40px;
+          margin-left: 30px;
+          left: 5%;
+          top: 30px;
+        }
+        .playButton_hover:hover {
+          background: #a3a3a3;
+          border: solid 1px #a3a3a3;
+          border-radius: 20px;
+          color: #FFF;
+          outline: none;
+          cursor: pointer;
         }
         .score {
             color: #A3F711;
@@ -80,30 +113,32 @@
         </style>
     </head>
     <body>
-            <b>
-                <a class="button" href="holder" style="float:left"> Home </a>
-                <a class="button" href="holder" style="float: right"> Game </a>
-            </b>
+        <input class="playButton playButton_hover" type="button" value="PLAY" id="play" onclick="window.location.href = 'game.html';">
+        <input class="homeButton homeButton_hover" type="button" value="HOME" id="home" onclick="window.location.href = 'index.html';">
         <center>
-            <div class="leadersBox" style="color: #000; margin-top: 30px"> Leaderboard </div>
-            <div class="leadersBox"id="leaderList">
-                <div class="leader" id="1st">
+            <div class="leadersBox" id="leaderList">
+                <h1 style="color: #FFF;">LEADERBOARD</h1>
+                <div class="title" id="title">
+                  <div id="name">NAME</div>
+                  <div id="score">SCORE</div>
+                </div>
+                <div class="leader" id="firstPlace">
                     <div class="user" id="firstUser" href="/user1"></div>
                     <div class="score" id="firstScore" href="/score1"></div>
                 </div>
-                <div class="leader" id="2nd">
+                <div class="leader" id="secondPlace">
                     <div class="user" id="secondUser" href="/user2"></div>
                     <div class="score" id="secondScore" href="/score2"></div>
                 </div>
-                <div class="leader" id="3rd">
+                <div class="leader" id="thirdPlace">
                     <div class="user" id="thirdUser" href="/user3"></div>
                     <div class="score" id="thirdScore" href="/score3"></div>
                 </div>
-                <div class="leader" id="4th">
+                <div class="leader" id="fourthPlace">
                     <div class="user" id="fourthUser" href="/user4"></div>
                     <div class="score" id="fourthScore" href="/score4"></div>
                 </div>
-                <div class="leader" id="5th">
+                <div class="leader" id="fifthPlace">
                     <div class="user" id="fifthUser" href="/user5"></div>
                     <div class="score" id="fifthScore" href="/score5"></div>
                 </div>
