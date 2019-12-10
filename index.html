@@ -48,38 +48,51 @@
       h5 {
         font-size: 17px;
       }
+      p {
+        font-size: 14px;
+      }
 .flip-card {
-  margin: auto;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  margin-left: -150px;
   background-color: transparent;
-  width: 310px;
-  height: 310px;
   perspective: 1000px;
 }
 .flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  margin-left: -150px;
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 .flip-card:hover .flip-card-inner {
   transform: rotateY(180deg);
 }
 .flip-card-front, .flip-card-back {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  margin-left: -150px;
   backface-visibility: hidden;
 }
 .flip-card-front {
-  background-color: #a3a3a3;
-  color: #FFF;
+  background-color: #ad42ff;
+  border: solid 1px #ad42ff;
+  border-radius: 40px;
+  color: #f7f7f7;
 }
 .flip-card-back {
-  background-color: #a3a3a3;
-  color: #FFF;
+  vertical-align: middle;
+  background-color: #ad42ff;
+  border: solid 1px #ad42ff;
+  border-radius: 40px;
+  color: #f7f7f7;
   transform: rotateY(180deg);
 }
 .contButton {
@@ -94,7 +107,7 @@
   text-decoration: none;
   width: 120px;
   margin-left: -60px;
-  margin-top: 50px;
+  top: 600px;
   font-size: 12pt;
 }
 .contButton_hover:hover {
@@ -105,8 +118,33 @@
   outline: none;
   cursor: pointer;
 }
+.leaderboardButton {
+  position: absolute;
+  background-color: #878787;
+  border: solid 1px #878787;
+  border-radius: 20px;
+  color: #FFF;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  width: 110px;
+  height: 40px;
+  top: 30px;
+  right: 5%;
+}
+.leaderboardButton_hover:hover {
+  background: #a3a3a3;
+  border: solid 1px #a3a3a3;
+  border-radius: 20px;
+  color: #FFF;
+  outline: none;
+  cursor: pointer;
+}
     </style>
   </head>
+  <body>
+  <input class="leaderboardButton leaderboardButton_hover" type="button" value="LEADERBOARD" id="leaderboard" onclick="window.location.href = 'leaderboard.html';">
   <h1 align="center" style="font-size: 60px">Onym Words: A Vocab Game<h1>
   <h4 align="center" style="color:#e6e6e6">Designed by Eric Duanmu, Angela Maliakal, Daniel Lee, and Brian Savage</h4>
   <h5 align="center" style="color:#e6e6e6">Featuring the Merriam-Webster Collegiate Thesaurus and Dictionary APIs</h5>
@@ -114,17 +152,17 @@
   <div class="flip-card-inner">
     <div class="flip-card-front">
     	<br><br><br><br><br>
-		<h1>How to Play:<h1>
+		<h1>How to Play<h1>
     </div>
     <div class="flip-card-back">
-      <p>1. Two words will be shown. Your job is to select whether the words are synonyms, antonyms, or unrelated.</p>
-      <p>2. Once you select, you can hover over the word for its definition.</p>
-      <p>3. When you are ready, click next to get your next pair of words.</p>
-      <P>4. You have 3 lives. If you get three pairs wrong, you will lose!</P>
-      <P>Click the continue button to get started!</P>
+      <p><br>1. Two words will be shown. Your job is to decide whether the words are synonyms, antonyms, or neither.</p>
+      <p>2. Once you answer, you can hover over the words for their definition.</p>
+      <p>3. When you are ready, click NEXT to get your next pair of words.</p>
+      <p>4. You have 3 lives. The game ends when you run out!</p>
+      <p><br>Click CONTINUE to get started!</p>
     </div>
   </div>
 </div>
   <input class="contButton contButton_hover" type="button" value="Continue" id="continue" onclick="window.location.href = 'game.html';">
-
+</body>
 </html>
