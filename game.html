@@ -23,18 +23,17 @@
       #wordsContainer {
         position: relative;
         margin-bottom: 120px;
+        margin-top: 35px;
       }
       .word {
         position: relative;
         display: inline;
         margin: 0px 10px;
         text-decoration: none;
-        border-bottom: 5px solid #ad42ff;
-        /*text-decoration: underline #ad42ff solid;*/
         text-align: center;
       }
       .word_hover:hover {
-        color: #ad42ff;
+        color: #ffd166;
       }
       h2 {
         font-size: 40px;
@@ -53,22 +52,22 @@
         margin-bottom: 30px;
       }
       .answerButton {
-        width: 150px;
-        height: 50px;
+        width: 15%;
         color: #FFF;
         position: relative;
         background-color: #1f1f1f;
         border: solid 3px #1f1f1f;
         border-radius: 20px;
+        padding: 16px 24px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 12pt;
+        font-size: 16pt;
         margin: 0px 10px;
       }
       .answerButton_hover:hover {
-        background: #ad42ff;
-        border: solid 3px #ad42ff;
+        background: #808080;
+        border: solid 3px #808080;
         border-radius: 20px;
         color: #f7f7f7;
         outline: none;
@@ -113,7 +112,7 @@
         position: absolute;
         left: 50%;
         margin-left: -450px;
-        top: 240px;
+        top: 230px;
         width: 900px;
         text-align: center;
       }
@@ -133,7 +132,7 @@
         position: absolute;
         left: 50%;
         margin-left: -315px;
-        top: 300px;
+        top: 295px;
         width: 630px;
         height: 95px;
         background-color: #bdbdbd;
@@ -151,12 +150,10 @@
         padding: 10px 10px;
         text-align: center;
         text-decoration: none;
-        font-size: 12px;
-        left: 50%;
-        width: 110px;
-        height: 40px;
-        margin-left: -55px;
-        top: 30px;
+        width: 80px;
+        margin-left: 30px;
+        margin-top: 30px;
+        font-size: 15px;
       }
       .homeButton_hover:hover {
         background: #a3a3a3;
@@ -166,33 +163,22 @@
         outline: none;
         cursor: pointer;
       }
-      .leaderboardButton {
-        position: absolute;
-        background-color: #878787;
-        border: solid 1px #878787;
-        border-radius: 20px;
-        color: #FFF;
-        padding: 10px 10px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 12px;
-        width: 110px;
-        height: 40px;
-        top: 30px;
-        right: 5%;
+      .score_box{
+        width:300px; height:80px; border:1px solid #dc143c; 
+        position: relative; margin-left: auto; margin-right: auto;
       }
-      .leaderboardButton_hover:hover {
-        background: #a3a3a3;
-        border: solid 1px #a3a3a3;
-        border-radius: 20px;
-        color: #FFF;
-        outline: none;
-        cursor: pointer;
+      #name_text{
+        box-sizing: border-box;
+        width: 300px; height: 20px;
+        margin-bottom: 100px;
+        padding: 20px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
       }
+
     </style>
   </head>
   <body>
-    <input class="leaderboardButton leaderboardButton_hover" type="button" value="LEADERBOARD" id="leaderboard" onclick="window.location.href = 'https://leaders-rankings.herokuapp.com'">
     <input class="homeButton homeButton_hover" type="button" value="HOME" id="home" onclick="window.location.href = 'index.html';">
     <div class="container" id="container">
     <div class="container2" id="container2">
@@ -201,9 +187,9 @@
         <h2><div class="word" id="word1">word1</div> and <div class="word" id="word2">word2</div> are: </h2>
       </div>
       <div id="answersContainer">
-        <input class="answerButton answerButton_hover" type="button" value="SYNONYMS" id="synonyms" onclick="return answer(this.id);">
-        <input class="answerButton answerButton_hover" type="button" value="ANTONYMS" id="antonyms" onclick="return answer(this.id);">
-        <input class="answerButton answerButton_hover" type="button" value="NEITHER" id="neither" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Synonyms" id="synonyms" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Antonyms" id="antonyms" onclick="return answer(this.id);">
+        <input class="answerButton answerButton_hover" type="button" value="Neither" id="neither" onclick="return answer(this.id);">
       </div>
       <input class="nextButton" id="nextButton" type="button" value="Continue" onclick="return next();">
       <div id="scoreContainer">
@@ -219,10 +205,10 @@
       var words = ["POLITE","BEAUTIFUL", "GORGEOUS", "HAPPY", "SAD", "UGLY",
                   "UNHAPPY", "UNATTRACTIVE", "ATTRACTIVE", "HANDSOME", "CUTE",
                   "SMART", "STUPID", "BIG", "TINY", "HUGE", "LUCKY", "UNLUCKY",
-                  "FUN", "FUNNY", "SCARY", "DUMB", "DIFFICULT", "EASY", "PLEASANT",
-                  "EXCITED", "PATHETIC", "HONORABLE", "INCORRECT", "MANY",
-                  "WORSE", "SUPERIOR", "ELEGANT", "SIMPLE", "LOUD", "QUIET", "PROPER",
-                  "SECURE", "HORRIBLE", "DISGUSTING", "SMOOTH", "HEALTHY", "RESPONSIBLE"];
+                  "FUN", "SCARY", "DUMB", "DIFFICULT", "EASY", "PLEASANT",
+                  "EXCITED", "PATHETIC", "HONORABLE", "WRONG", "CORRECT", "MANY",
+                  "HIGH", "DARK", "ELEGANT", "SIMPLE", "LOUD", "QUIET"];
+      
       var usedWords = [];
       var word1 = document.getElementById("word1");
       var word2 = document.getElementById("word2");
@@ -234,11 +220,11 @@
       var neiDisplay = document.getElementById("neither");
       var nextDisplay = document.getElementById("nextButton");
       var defDisplay = document.getElementById("definition");
-      var defText1;
-      var defText2;
+      var defText;
       var w1choose = "";
       var w2choose = "";
       var correctAnswer = "NEITHER";
+      var finalScore;
 
       function setWords() {
           document.getElementById("feedback").innerHTML = "";
@@ -253,18 +239,6 @@
             async: false
           });
           var pick = Math.floor(Math.random() * 3) + 1;
-          console.log(pick);
-          choosew2(w1choose, pick);
-          if ((w2choose == "undefined") || (w2choose == "")) {
-            w2choose = pickNeither(w1choose);
-          }
-          word1.innerHTML = w1choose;
-          word2.innerHTML = w2choose;
-          console.log("usedWords: " + JSON.stringify(usedWords));
-          console.log("correctAnswer: " + correctAnswer);
-        }
-
-        function choosew2(w1choose, pick) {
           if (pick == 1) {
             if (synsExist(w1choose)) {
               w2choose = pickSynonym(w1choose);
@@ -291,6 +265,50 @@
               correctAnswer = "ANTONYMS";
             }
           }
+          while (usedWords.includes(w1choose) || usedWords.includes(w2choose)) {
+            if (pick == 1) {
+              if (synsExist(w1choose)) {
+                w2choose = pickSynonym(w1choose);
+                correctAnswer = "SYNONYMS";
+              } else {
+                pick = 3;
+              }
+            }
+            if (pick == 2) {
+              if (antsExist(w1choose)) {
+                w2choose = pickAntonym(w1choose);
+                correctAnswer = "ANTONYMS";
+              } else {
+                pick = 3;
+              }
+            }
+            if (pick == 3) {
+              correctAnswer = "NEITHER";
+              w2choose = pickNeither(w1choose);
+              if (areSynonyms(w1choose, w2choose)) {
+                correctAnswer = "SYNONYMS";
+              }
+              if (areAntonyms(w1choose, w2choose)) {
+                correctAnswer = "ANTONYMS";
+              }
+            }
+          }
+          if (word2.textContent == "undefined") {
+            w2choose = pickNeither(w1choose);
+            correctAnswer = "NEITHER";
+            if (areSynonyms(w1choose, w2choose)) {
+              correctAnswer = "SYNONYMS";
+            }
+            if (areAntonyms(w1choose, w2choose)) {
+              correctAnswer = "ANTONYMS";
+            }
+          }
+          word1.innerHTML = w1choose;
+          word2.innerHTML = w2choose;
+          usedWords.push(w1choose);
+          usedWords.push(w2choose);
+          console.log("usedWords: " + JSON.stringify(usedWords));
+          console.log("correctAnswer: " + correctAnswer);
         }
 
         function synsExist(w) {
@@ -300,7 +318,7 @@
             url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key="+"22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
-              if (data[0].meta.hasOwnProperty("syns")) {
+              if (data[0].meta.syns.status === undefined) {
                 b = true;
               }
             },
@@ -316,7 +334,7 @@
             url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key="+"22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
             dataType: 'json',
             success: function(data) {
-              if (data[0].meta.hasOwnProperty("ants")) {
+              if (data[0].meta.ants.status === undefined) {
                 b = true;
               }
             },
@@ -371,6 +389,45 @@
             },
             async: false
           });
+          var syns = [];
+          var ants = [];
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
+            dataType: 'json',
+            success: function(data) {
+              if (data[0].meta.ants.status !== undefined) {
+                ants = data[0].meta.ants[0];
+              }
+            },
+            async: false
+          });
+          $.ajax({
+            type: "GET",
+            url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
+            dataType: 'json',
+            success: function(data) {
+              if (data[0].meta.syns.status !== undefined) {
+                syns = data[0].meta.syns[0];
+              }
+            },
+            async: false
+          });
+          if ((syns.length > 0) && (ants.length > 0)) {
+            while (syns.includes(n) || ants.includes(n)) {
+              $.ajax({
+                type: "GET",
+                url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
+                dataType: 'json',
+                success: function(data) {
+                  n = data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)];
+                },
+                async: false
+              });
+            }
+          } else {
+            n = words[Math.floor(Math.random() * words.length)];
+          }
           return n.toUpperCase();
         }
 
@@ -381,7 +438,6 @@
           type: "GET",
           url: "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word1.textContent + "?key=058036c9-eb04-4c41-b4b8-72de22609d84",
           dataType: 'json',
-          async: false
         }).done(function(data) {
           defText = JSON.stringify(data[0].shortdef[0]).replace(/\"/g, "");
           defDisplay.innerHTML = "<h4 class='definitionText'>" + defText + "</h4>";
@@ -394,7 +450,6 @@
           type: "GET",
           url: "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word2.textContent + "?key=058036c9-eb04-4c41-b4b8-72de22609d84",
           dataType: 'json',
-          async: false
         }).done(function(data) {
           defText = JSON.stringify(data[0].shortdef[0]).replace(/\"/g, "");
           defDisplay.innerHTML = "<h4 class='definitionText'>" + defText + "</h4>";
@@ -443,12 +498,77 @@
             nextDisplay.style.visibility = "visible";
           } else {
             document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
-            nextDisplay.onclick = "";                                          //show gameover screen on click
+            nextDisplay.onclick = game_end();                                        //show gameover screen on click
             nextDisplay.style.visibility = "visible";
-            var finalScore = parseInt(document.getElementById("currentScore").textContent);
+            finalScore = parseInt(document.getElementById("currentScore").textContent);
             document.getElementById("scoreLine").innerHTML = "GAME OVER! Final score: " + finalScore;
           }
         }
+      }
+
+      function game_end(){
+          document.getElementById("wordsContainer").style.visibility = "hidden";
+          document.getElementById("answersContainer").style.visibility = "hidden";
+          document.getElementById("feedback").style.visibility = "hidden";
+          document.getElementById("instruct").style.visibility = "hidden";
+          document.getElementById("scoreContainer").style.visibility = "hidden";
+
+          add_div();
+
+      }
+
+      function add_div(){
+
+          $(document).ready(function(){
+              $("#wordsContainer + #answersContainer").before($('<div class = "score_box" id = "user" name = "score"></div>'));
+              var text1 = '<p>' + "Your Score:" + '</p>';
+              $("#user").append(text1);
+              $("#user").append(finalScore);
+
+              $("#answersContainer + #nextButton").before($('<div class = "unique" id = "unique_name" name = "player_name"></div>'));
+              var text2 = '<p>' + "Enter unique name" + '</p>';
+              $("#unique_name").append(text2);
+              $("#unique_name").append('<input type = "text" id = "name_text" value = "Unique name">');
+              
+             $("#name_text").click(function(){
+                  $("#name_text").val(" ");
+              });
+
+             
+
+
+              document.getElementById("nextButton").onclick = function () {
+                  insert_mongo();
+                  modify_continue();
+                  location.href = "index.html";
+
+              };
+          });
+      }
+
+      function insert_mongo(){
+          var user_id = $("#name_text").val();
+          console.log("name is: " + user_id);
+
+          var object = {name: user_id, score: finalScore};
+
+          $.ajax({
+              url: "mongodb+srv://dlee07:comp20@scores-qpnhf.mongodb.net/test?retryWrites=true&w=majority",
+              method: "POST",
+              contentType: "application/json",
+              data: object
+          }).then(function (data){
+                  console.log("Success");
+          });
+      }
+
+      function modify_continue(){
+          $("#user").remove();
+          $("#unique_name").remove();
+
+          var original = document.getElementById("nextButton").onclick;
+          original = "return next();";
+          $("#nextButton").attr("onclick", original);
       }
 
       function next() {
@@ -478,7 +598,7 @@
           success: function(data) {
             w1 = w1.toLowerCase();
             w2 = w2.toLowerCase();
-            if ((data[0].meta.ants.status !== undefined)) {
+            if ((data[0].meta.ants.status === undefined)) {
               if (data[0].meta.ants[0].includes(w2)) {
                 isAntonym = true;
                 console.log(w1 + " and " + w2 + " are antonyms");
