@@ -15,41 +15,9 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dlee07:comp20@scores-qpnhf.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-var router = express.Router();
-var url ='mongodb://localhost:27017/scores';
-const port = 3000 || process.env.PORT;
-app.listen(port, function(){
-	console.log('Listening on port ' + port); //Listening on port 8888
-})
 
 
-app.get('/', function(req, res, next){
-		res.sendFile(__dirname + '/game.html');
-});
-       
-
-       			
-// router.post('/insert', function(req, res, next){
-//     client.connect(err=> {
-//         const collection = client.db("scores").collection("game");
-//        	var doc = {
-//        							    name: req.body.player_name,
-//        							    score: req.body.score
-//        	}
-
-//        	collection.insertOne(doc, function(err, result){
-//        	//assert.equal(null, err);
-//  				var listener = app.listen(port, function(){
-//     					console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-// 							});
-//  							console.log('item inserted');
-//        	});
-       			
-//        	client.close();
-//     });
-// })
-
-/*client.connect(err => {
+client.connect(err => {
 	console.log("Connected");
 	const collection = client.db("scores").collection("game");
 	var users = [];
@@ -73,9 +41,9 @@ app.get('/', function(req, res, next){
 		http.createServer(handleRequest).listen('./leaderboard.html');
 	}); 
     client.close();
-});*/
+});
 
-module.exports = router;
+
 
 
 

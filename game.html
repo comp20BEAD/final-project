@@ -556,7 +556,7 @@
               url: "mongodb+srv://dlee07:comp20@scores-qpnhf.mongodb.net/test?retryWrites=true&w=majority",
               method: "POST",
               contentType: "application/json",
-              data: object
+              data: JSON.stringify(object);
           }).then(function (data){
                   console.log("Success");
           });

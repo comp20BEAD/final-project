@@ -8,30 +8,31 @@ var express = require('express');
 var router = express.Router();
 var url ='mongodb://localhost:27017/scores';
 const app = express();
-const port = 3000;
+const port = 3000 || process.env.PORT;
+
+app.listen(port, function(){
+  console.log('Listening on port ' + port); //Listening on port 8888
+})
 
 
-router.get('/', function(req, res, next){
-		res.render('game.html');
+app.get('/', function(req, res, next){
+    res.sendFile(__dirname + '/game.html');
 });
        
-client.connect(err=> {
-       			const collection = client.db("scores").collection("game");
-        		// perform actions on the collection object
-       			router.post('/insert', function(req, res, next){
-       					var doc = {
-       							name: req.body.player_name,
-       							score: req.body.score
-       					}
+router.post('/insert', function(req, res, next){
+     client.connect(err=> {
+         const collection = client.db("scores").collection("game");
+          var doc = {
+                          name: req.body.player_name,
+                          score: req.body.score
+          }
 
-       					collection.insertOne(doc, function(err, result){
-       							//assert.equal(null, err);
- 								var listener = app.listen(port, function(){
-    							console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-								});
- 								console.log('item inserted');
-       					});
-       			})
-       			client.close();
-});
+          collection.insertOne(doc, function(err, result){
+          //assert.equal(null, err);
+                console.log('item inserted');
+        });
+                  client.close();
+     });
+})
 module.exports = router;
+
