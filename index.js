@@ -8,12 +8,13 @@ var express = require('express');
 var router = express.Router();
 var url ='mongodb://localhost:27017/scores';
 const app = express();
-const port = 3000 || process.env.PORT;
+var http = require('http');
+var server = http.Server(app);
+var port = 3000 || process.env.PORT;
 
 app.listen(port, function(){
   console.log('Listening on port ' + port); //Listening on port 8888
 })
-
 
 app.get('/', function(req, res, next){
     res.sendFile(__dirname + '/game.html');
