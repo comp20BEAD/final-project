@@ -814,14 +814,12 @@
               $("#submit_button").click(function () {
                   insert_mongo();
                   modify_continue();
-                  location.href = "leaderboard.html";
+                  location.href = "http://leaders-rankings.herokuapp.com";
               })
           });
       };
       function insert_mongo(){
           var user_id = $("#name_text").val();
-          console.log("name is: " + user_id);
-          console.log("score is " + finalScore);
           var object = {name: user_id, score: finalScore};
       }
       function modify_continue(){
