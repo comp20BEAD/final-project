@@ -164,8 +164,13 @@
         cursor: pointer;
       }
       .score_box{
-        width:300px; height:80px; border:1px solid #dc143c;
-        position: relative; margin-left: auto; margin-right: auto;
+        top: 250px;
+        position: absolute;
+        width:300px;
+        height:80px;
+        border:1px solid #dc143c;
+        left: 50%;
+        margin-left: -150px;
       }
       #name_text{
         box-sizing: border-box;
@@ -212,8 +217,9 @@
               "ACTIVE", "PASSIVE", "TERRIBLE"];
     var word1 = document.getElementById("word1");
     var word2 = document.getElementById("word2");
-    var a;
+    var answerId;
     var currScore;
+    var finalScore;
     var currLives;
     var synDisplay = document.getElementById("synonyms");
     var antDisplay = document.getElementById("antonyms");
@@ -241,7 +247,7 @@
         var pick = Math.floor(Math.random() * 11) + 1;
         choosew2(w1choose, pick);
         if ((w2choose == "undefined") || (w2choose == "")) {
-          w2choose = pickNeither(w1choose);
+          w2choose = pickRandom(w1choose);
         }
         word1.innerHTML = w1choose;
         word2.innerHTML = w2choose;
@@ -254,7 +260,7 @@
             w2choose = pickSynonym(w1choose);
             correctAnswer = "SYNONYMS";
           } else {
-            //console.log("no synonyms, switch to pickNeither()")
+            //console.log("no synonyms, switch to pickRandom()")
             pick = 3;
           }
         }
@@ -263,13 +269,13 @@
             w2choose = pickAntonym(w1choose);
             correctAnswer = "ANTONYMS";
           } else {
-            //console.log("no antonyms, switch to pickNeither()")
+            //console.log("no antonyms, switch to pickRandom()")
             pick = 3;
           }
         }
         if (pick >= 9) {                                                     // 3/11 chance of neither (less meaningful and slightly slower to run)
           correctAnswer = "NEITHER";
-          w2choose = pickNeither(w1choose);
+          w2choose = pickRandom();
           if (areSynonyms(w1choose, w2choose)) {
             correctAnswer = "SYNONYMS";
           }
@@ -287,9 +293,19 @@
           dataType: 'json',
           success: function(data) {
             if (data[0].meta.hasOwnProperty("syns")) {
-              if (data[0].meta.syns.length != 0) {
-                console.log("synsExist true");
-                b = true;
+              //console.log("3 hasOwnProperty true");
+              if (data[0].meta.syns.status === undefined) {
+                //console.log("2 status === undefined true");
+                if (data[0].meta.syns.length != 0) {
+                  //console.log("1 syns.length != 0 true");
+                  //console.log("syns.length == " + data[0].meta.syns.length);
+                  if (data[0].meta.syns[0].length != 0) {
+                    //console.log("0 syns[0].length != 0 true");
+                    //console.log("syns[0].length == " + data[0].meta.syns[0].length);
+                    //console.log("synsExist true");
+                    b = true;
+                  }
+                }
               }
             }
           },
@@ -364,8 +380,8 @@
         return a.toUpperCase().replace(/\"/g, "");
       }
 
-      function pickNeither(w) {
-        //console.log("pickNeither");
+      function pickRandom() {
+        //console.log("pickRandom");
         var n;
         $.ajax({
           type: "GET",
@@ -411,7 +427,7 @@
 
     function answer(ansId) {
       $("#"+correctAnswer.toLowerCase()).addClass("correctButton");
-      a = ansId;
+      answerId = ansId;
       synDisplay.disabled = true;
       antDisplay.disabled = true;
       neiDisplay.disabled = true;
@@ -419,7 +435,6 @@
       $("#antonyms").removeClass("answerButton_hover");
       $("#neither").removeClass("answerButton_hover");
       document.getElementById("instruct").innerHTML = "Hover over the words for their definitions!";
-
       $(".word").addClass("word_hover");
       word1.addEventListener("mouseover", showDef1);
       word2.addEventListener("mouseover", showDef2);
@@ -428,8 +443,8 @@
       })
 
       display = document.getElementById("feedback");
-      if (a == correctAnswer.toLowerCase()) {
-        $("#" + a).addClass("correctButton");
+      if (answerId == correctAnswer.toLowerCase()) {
+        $("#" + ansId).addClass("correctButton");
         display.style.color = "#14b000";
         display.innerHTML = "✅";
         currScore = parseInt(document.getElementById("currentScore").textContent);
@@ -438,7 +453,7 @@
         nextDisplay.style.visibility = "visible";
       }
       else {
-        $("#" + a).addClass("wrongButton");
+        $("#" + answerId).addClass("wrongButton");
         display.style.color = "#d90024";
         display.innerHTML = "❌";
         currLives = parseInt(document.getElementById("lives").textContent);
@@ -448,9 +463,11 @@
           nextDisplay.style.visibility = "visible";
         } else {
           document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
-          nextDisplay.onclick = "";                                          //show gameover screen on click
+          //nextDisplay.onclick = null;
+        //  nextDisplay.onclick = "return game_end();";                        //show gameover screen on click
+          nextDisplay.setAttribute("onclick", "return game_end()")
           nextDisplay.style.visibility = "visible";
-          var finalScore = parseInt(document.getElementById("currentScore").textContent);
+          finalScore = parseInt(document.getElementById("currentScore").textContent);
           document.getElementById("scoreLine").innerHTML = "GAME OVER! Final score: " + finalScore;
         }
       }
@@ -461,8 +478,8 @@
       word2.removeEventListener("mouseover", showDef2);
       document.getElementById("instruct").innerHTML = "";
       $(".word").removeClass("word_hover")
-      $("#" + a).removeClass("wrongButton");                                 // Hide feedback
-      $("#" + a).removeClass("correctButton");                               // Hide feedback
+      $("#" + answerId).removeClass("wrongButton");                                 // Hide feedback
+      $("#" + answerId).removeClass("correctButton");                               // Hide feedback
       $("#synonyms").addClass("answerButton_hover");                         // Allow hover on answerButtons
       $("#antonyms").addClass("answerButton_hover");                         // Allow hover on answerButtons
       $("#neither").addClass("answerButton_hover");                          // Allow hover on answerButtons
@@ -470,19 +487,19 @@
       antDisplay.disabled = false;                                           // answerButtons clickable again
       neiDisplay.disabled = false;                                           // answerButtons clickable again
       nextDisplay.style.visibility = "hidden";
-      $("#"+correctAnswer.toLowerCase()).removeClass("correctButton");
+      $("#" + correctAnswer.toLowerCase()).removeClass("correctButton");
       setWords();
     }
 
     function areAntonyms(w1, w2) {
       var isAntonym = false;
+      w1 = w1.toLowerCase();
+      w2 = w2.toLowerCase();
       $.ajax({
         type: "GET",
         url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
         dataType: 'json',
         success: function(data) {
-          w1 = w1.toLowerCase();
-          w2 = w2.toLowerCase();
           if (data[0].meta.ants.length != 0) {
             if (data[0].meta.ants[0].length != 0) {
               if (data[0].meta.ants[0].includes(w2)) {
@@ -502,17 +519,15 @@
         url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
         dataType: 'json',
         success: function(data) {
-          w1 = w1.toLowerCase();
-          w2 = w2.toLowerCase();
           if (data[0].meta.ants.length != 0) {
             if (data[0].meta.ants[0].length != 0) {
               if (data[0].meta.ants[0].includes(w1)) {
                 isAntonym = true;
               }
             } else {
-                if (data[0].meta.ants.includes(w1)) {
-                  isAntonym = true;
-                }
+              if (data[0].meta.ants.includes(w1)) {
+                isAntonym = true;
+              }
             }
           }
         },
@@ -522,14 +537,14 @@
     }
 
     function areSynonyms(w1, w2) {
-      var isSynonym;
+      var isSynonym = false;
+      w1 = w1.toLowerCase();
+      w2 = w2.toLowerCase();
       $.ajax({
         type: "GET",
         url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w1+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
         dataType: 'json',
         success: function(data) {
-          w1 = w1.toLowerCase();
-          w2 = w2.toLowerCase();
           if ((data[0].meta.syns.status === undefined)) {
             if (data[0].meta.syns[0].includes(w2)) {
               isSynonym = true;
@@ -543,8 +558,6 @@
         url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+w2+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
         dataType: 'json',
         success: function(data) {
-          w1 = w1.toLowerCase();
-          w2 = w2.toLowerCase();
           if ((data[0].meta.syns.status === undefined)) {
             if (data[0].meta.syns[0].includes(w1)) {
               isSynonym = true;
@@ -557,9 +570,9 @@
       return isSynonym;
     }
 
-      //GAME JAVASCRIPT ABOVE
+      //ERIC'S GAME JAVASCRIPT ABOVE
 
-      //DATABASE FUNCTIONS BELOW
+      //DANNY'S DATABASE FUNCTIONS BELOW
 
       function game_end(){
           document.getElementById("wordsContainer").style.visibility = "hidden";
@@ -585,7 +598,7 @@
               $("#unique_name").append(text2);
               $("#unique_name").append('<input type = "text" id = "name_text" value = "Unique name">');
 
-             $("#name_text").click(function(){
+              $("#name_text").click(function(){
                   $("#name_text").val(" ");
               });
 
