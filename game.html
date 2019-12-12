@@ -163,18 +163,27 @@
         outline: none;
         cursor: pointer;
       }
-      .score_box{
-        top: 250px;
+      .score_box {
+        top: 0px;
         position: absolute;
         width:300px;
         height:80px;
-        border:1px solid #dc143c;
         left: 50%;
         margin-left: -150px;
+        font-size: 40px;
+      }
+      .unique {
+        position: absolute;
+        height: 80px;
+        width: 300px;
+        left: 50%;
+        margin-left: -150px;
+        top: 250px;
       }
       #name_text{
         box-sizing: border-box;
-        width: 300px; height: 20px;
+        width: 300px;
+        height: 20px;
         margin-bottom: 100px;
         padding: 20px 20px;
         border: 1px solid #ccc;
@@ -589,14 +598,14 @@
 
           $(document).ready(function(){
               $("#wordsContainer + #answersContainer").before($('<div class = "score_box" id = "user" name = "score"></div>'));
-              var text1 = '<p>' + "Your Score:" + '</p>';
+              var text1 = '<p>' + "Final Score:" + '</p>';
               $("#user").append(text1);
               $("#user").append(finalScore);
 
               $("#answersContainer + #nextButton").before($('<div class = "unique" id = "unique_name" name = "player_name"></div>'));
-              var text2 = '<p>' + "Enter unique name" + '</p>';
+              var text2 = '<p>' + "Enter your name" + '</p>';
               $("#unique_name").append(text2);
-              $("#unique_name").append('<input type = "text" id = "name_text" value = "Unique name">');
+              $("#unique_name").append('<input type = "text" id = "name_text" value = "Name">');
 
               $("#name_text").click(function(){
                   $("#name_text").val(" ");
@@ -605,11 +614,10 @@
 
 
 
-              document.getElementById("nextButton").onclick = function () {
+              nextDisplay.onclick = function () {
                   insert_mongo();
                   modify_continue();
                   location.href = "index.html";
-
               };
           });
       }
