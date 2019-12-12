@@ -785,20 +785,27 @@
       function add_div(){
 
           $(document).ready(function(){
-              $("#wordsContainer + #answersContainer").before($('<div class = "score_box" id = "user" name = "score"></div>'));
-              var text1 = '<p>' + "Final Score:" + '</p>';
+              $("#wordsContainer + #answersContainer").before($('<form method = "post" action = "/post-feedback" id = "data_collection"></form>'));
+              var text1 = '<label>' + "Your Score:" + '<input type= "text" style = "display: none" class = "score_box" id = "user" name = "score" value="' + finalScore + '" required>' +'</label>' + '<br>';
+              $("#data_collection").append(text1);
+              //$("#user").append(finalScore);
+              var text2 = '<label>' + "Enter unique name"+ '<br>' + '<input type = "text" id = "name_text" name = "player_name" required>'+'</label>' +'<br>';
+              $("#data_collection").append(text2);
+              var text3 = '<input type = "submit" id = "submit_button" value = "Submit" href="http://leaders-rankings.herokuapp.com">';
+              $("#data_collection").append(text3);
+             
+             /* var text1 = '<p>' + "Final Score:" + '</p>';
               $("#user").append(text1);
               $("#user").append(finalScore);
 
               $("#answersContainer + #nextButton").before($('<div class = "unique" id = "unique_name" name = "player_name"></div>'));
               var text2 = '<p>' + "Enter your name" + '</p>';
               $("#unique_name").append(text2);
-              $("#unique_name").append('<input type = "text" id = "name_text" value = "Name">');
+              $("#unique_name").append('<input type = "text" id = "name_text" value = "Name">');*/
 
               $("#name_text").click(function(){
                   $("#name_text").val(" ");
-              });
-
+              })
 
 
 
@@ -811,29 +818,32 @@
       }
 
       function insert_mongo(){
+
           var user_id = $("#name_text").val();
           console.log("name is: " + user_id);
+          console.log("score is " + finalScore);
 
           var object = {name: user_id, score: finalScore};
 
-          $.ajax({
+
+          /*$.ajax({
               url: "mongodb+srv://dlee07:comp20@scores-qpnhf.mongodb.net/test?retryWrites=true&w=majority",
               method: "POST",
               contentType: "application/json",
               data: JSON.stringify(object),
           }).then(function (data){
                   console.log("Success");
-          });
+          });*/
       }
 
       function modify_continue(){
-          $("#user").remove();
-          $("#unique_name").remove();
+          $("#data_collection").remove();
 
-          var original = document.getElementById("nextButton").onclick;
+          /*var original = document.getElementById("nextButton").onclick;
           original = "return next();";
-          $("#nextButton").attr("onclick", original);
+          $("#nextButton").attr("onclick", original);*/
       }
+
 
     </script>
   </body>
