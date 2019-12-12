@@ -10,30 +10,43 @@ var url ='mongodb://localhost:27017/scores';
 const app = express();
 var http = require('http');
 var server = http.Server(app);
-var port = 3000 || process.env.PORT;
-
-app.listen(port, function(){
-  console.log('Listening on port ' + port); //Listening on port 8888
-})
+var port =  process.env.PORT;
+var path = require('path');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.resolve(__dirname, 'public')))
 
 app.get('/', function(req, res, next){
     res.sendFile(__dirname + '/game.html');
 });
        
-router.post('/insert', function(req, res, next){
-     client.connect(err=> {
-         const collection = client.db("scores").collection("game");
+app.post('/post-feedback', function(req, res){
+    console.log("hi " + req.body.player_name);
+    console.log(" bye " + req.body.score);
+});
+console.log("Finished");
+app.listen(port, function(){
+  console.log('Listening on port ' + port); //Listening on port 8888
+});
+
+
+/*
+
+client.connect(err=> {
+
           var doc = {
-                          name: req.body.player_name,
-                          score: req.body.score
+                          name: 'sam',//req.body.player_name,
+                          score:'12'//req.body.score
           }
+          
+          const collection = client.db("scores").collection("game");
 
           collection.insertOne(doc, function(err, result){
           //assert.equal(null, err);
                 console.log('item inserted');
-        });
+          });
                   client.close();
-     });
-})
+});*/
+
 module.exports = router;
 
