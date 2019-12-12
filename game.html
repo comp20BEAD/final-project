@@ -260,6 +260,40 @@
         background-color: #ad42ff;
         border-radius: 5px;
       }
+      #data_collection {
+        position: absolute;
+        left: 50%;
+        width: 400px;
+        margin-left: -200px;
+        top: 0px;
+      }
+      #name_text {
+        width: 250px;
+      }
+      #submit_button {
+        font-size: 12pt;
+        padding: 12px 24px;
+        position: relative;
+        background-color: #ad42ff;
+        border: solid 1px #ad42ff;
+        color: #f7f7f7;
+        border-radius: 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 0px;
+        cursor: pointer;
+      }
+      #submit_button:hover {
+        background: #9000ff;
+        border: solid 1px #9000ff;
+        border-radius: 15px;
+        color: #ebebeb;
+        outline: none;
+      }
+      #submit_button:focus {
+        outline: 0;
+      }
     </style>
   </head>
   <body>
@@ -348,7 +382,6 @@
             w2choose = pickSynonym(w1choose);
             correctAnswer = "SYNONYMS";
           } else {
-            //console.log("no synonyms, switch to pickRandom()")
             pick = 3;
           }
         }
@@ -357,7 +390,6 @@
             w2choose = pickAntonym(w1choose);
             correctAnswer = "ANTONYMS";
           } else {
-            //console.log("no antonyms, switch to pickRandom()")
             pick = 3;
           }
         }
@@ -381,16 +413,9 @@
           dataType: 'json',
           success: function(data) {
             if (data[0].meta.hasOwnProperty("syns")) {
-              //console.log("3 hasOwnProperty true");
               if (data[0].meta.syns.status === undefined) {
-                //console.log("2 status === undefined true");
                 if (data[0].meta.syns.length != 0) {
-                  //console.log("1 syns.length != 0 true");
-                  //console.log("syns.length == " + data[0].meta.syns.length);
                   if (data[0].meta.syns[0].length != 0) {
-                    //console.log("0 syns[0].length != 0 true");
-                    //console.log("syns[0].length == " + data[0].meta.syns[0].length);
-                    //console.log("synsExist true");
                     b = true;
                   }
                 }
@@ -410,16 +435,9 @@
           dataType: 'json',
           success: function(data) {
             if (data[0].meta.hasOwnProperty("ants")) {
-              //console.log("3 hasOwnProperty true");
               if (data[0].meta.ants.status === undefined) {
-                //console.log("2 status === undefined true");
                 if (data[0].meta.ants.length != 0) {
-                  //console.log("1 ants.length != 0 true");
-                  //console.log("ants.length == " + data[0].meta.ants.length);
                   if (data[0].meta.ants[0].length != 0) {
-                    //console.log("0 ants[0].length != 0 true");
-                    //console.log("ants[0].length == " + data[0].meta.ants[0].length);
-                    //console.log("antsExist true");
                     b = true;
                   }
                 }
@@ -432,7 +450,6 @@
       }
 
       function pickSynonym(w) {
-        //console.log("pickSynonym");
         var s;
         $.ajax({
           type: "GET",
@@ -440,7 +457,6 @@
           dataType: 'json',
           success: function(data) {
             s = JSON.stringify(data[0].meta.syns[0][Math.floor(Math.random() * data[0].meta.syns[0].length)]);
-            //console.log(w + " syns: " + JSON.stringify(data[0].meta.syns[0]));
           },
           async: false
         });
@@ -448,7 +464,6 @@
       }
 
       function pickAntonym(w) {
-        //console.log("pickAntonym");
         var a;
         $.ajax({
           type: "GET",
@@ -469,7 +484,6 @@
       }
 
       function pickRandom() {
-        //console.log("pickRandom");
         var n;
         $.ajax({
           type: "GET",
@@ -549,10 +563,8 @@
         }
       } else {
         answerId = ansId;
-
         if (answerId == correctAnswer.toLowerCase()) {
           $("#" + ansId).addClass("correctButton");
-
           display.innerHTML = "🧠✅";
           currScore = parseInt(document.getElementById("currentScore").textContent);
           currScore++;
@@ -671,7 +683,6 @@
         },
         async: false
       });
-      //console.log("areSynonyms end: isSynonym: " + isSynonym);
       return isSynonym;
     }
 
@@ -680,7 +691,6 @@
     function timing() {
       var timeLeft = 0;
       if (currScore < 5) {
-        //console.log("Max: " + progressBar.max)
         progressBar.setAttribute("max", "6");
         intervalTimer = setInterval(function() {
           document.getElementById("time").value = timeLeft;
@@ -697,7 +707,6 @@
         )
       }
       if (currScore >= 5 && currScore < 10) {
-        //console.log("Max: " + progressBar.max)
         progressBar.setAttribute("max", "5");
         intervalTimer = setInterval(function() {
           document.getElementById("time").value = timeLeft;
@@ -766,9 +775,16 @@
       }
     }
 
-      //ERIC'S GAME JAVASCRIPT ABOVE
+      // GAMEPLAY ABOVE
 
-      //DANNY'S DATABASE FUNCTIONS BELOW
+
+
+
+
+
+
+
+      // LEADERBOARD BELOW
 
       function game_end(){
           document.getElementById("wordsContainer").style.visibility = "hidden";
@@ -777,75 +793,40 @@
           document.getElementById("instruct").style.visibility = "hidden";
           document.getElementById("scoreContainer").style.visibility = "hidden";
           document.getElementById("livesContainer").style.visibility = "hidden";
+          document.getElementById("nextButton").style.visibility = "hidden";
           progressBar.style.visibility = "hidden";
           add_div();
 
       }
 
       function add_div(){
-
           $(document).ready(function(){
               $("#wordsContainer + #answersContainer").before($('<form method = "post" action = "/post-feedback" id = "data_collection"></form>'));
-              var text1 = '<label>' + "Your Score:" + '<input type= "text" style = "display: none" class = "score_box" id = "user" name = "score" value="' + finalScore + '" required>' +'</label>' + '<br>';
+              var text1 = '<label>' + "Your Score:" + "<h2>" + finalScore + "<br><br></h2>" + '<input type= "text" style = "display: none" class = "score_box" id = "user" name = "score" value="' + finalScore + '" required>' +'</label>' + '<br>';
               $("#data_collection").append(text1);
-              //$("#user").append(finalScore);
-              var text2 = '<label>' + "Enter unique name"+ '<br>' + '<input type = "text" id = "name_text" name = "player_name" required>'+'</label>' +'<br>';
+              var text2 = '<label>' + "Enter your name:"+ '<br><br>' + '<input type = "text" id = "name_text" name = "player_name" required>'+'</label>' +'<br>';
               $("#data_collection").append(text2);
               var text3 = '<input type = "submit" id = "submit_button" value = "Submit" href="http://leaders-rankings.herokuapp.com">';
               $("#data_collection").append(text3);
-             
-             /* var text1 = '<p>' + "Final Score:" + '</p>';
-              $("#user").append(text1);
-              $("#user").append(finalScore);
-
-              $("#answersContainer + #nextButton").before($('<div class = "unique" id = "unique_name" name = "player_name"></div>'));
-              var text2 = '<p>' + "Enter your name" + '</p>';
-              $("#unique_name").append(text2);
-              $("#unique_name").append('<input type = "text" id = "name_text" value = "Name">');*/
-
               $("#name_text").click(function(){
                   $("#name_text").val(" ");
               })
-
-
-
               $("#submit_button").click(function () {
                   insert_mongo();
                   modify_continue();
                   location.href = "leaderboard.html";
               })
-              };
           });
-      }
-
+      };
       function insert_mongo(){
-
           var user_id = $("#name_text").val();
           console.log("name is: " + user_id);
           console.log("score is " + finalScore);
-
           var object = {name: user_id, score: finalScore};
-
-
-          /*$.ajax({
-              url: "mongodb+srv://dlee07:comp20@scores-qpnhf.mongodb.net/test?retryWrites=true&w=majority",
-              method: "POST",
-              contentType: "application/json",
-              data: JSON.stringify(object),
-          }).then(function (data){
-                  console.log("Success");
-          });*/
       }
-
       function modify_continue(){
           $("#data_collection").remove();
-
-          /*var original = document.getElementById("nextButton").onclick;
-          original = "return next();";
-          $("#nextButton").attr("onclick", original);*/
       }
-
-
     </script>
   </body>
 </html>
