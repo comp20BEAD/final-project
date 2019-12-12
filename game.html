@@ -809,10 +809,11 @@
 
 
 
-              nextDisplay.onclick = function () {
+              $("#submit_button").click(function () {
                   insert_mongo();
                   modify_continue();
                   location.href = "leaderboard.html";
+              })
               };
           });
       }
