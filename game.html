@@ -22,7 +22,7 @@
       }
       #wordsContainer {
         position: relative;
-        margin-bottom: 120px;
+        margin-bottom: 250px;
         margin-top: 35px;
       }
       .word {
@@ -31,6 +31,7 @@
         margin: 0px 10px;
         text-decoration: none;
         text-align: center;
+        border-bottom: solid 7px #ad42ff;
       }
       .word_hover:hover {
         color: #ffd166;
@@ -46,6 +47,21 @@
       }
       h5 {
         font-size: 17px;
+      }
+      #scoreContainer {
+        text-align: center;
+        position: absolute;
+        width: 200px;
+        top: 225px;
+        left: -50px;
+        background-color:
+      }
+      #livesContainer {
+        text-align: center;
+        position: absolute;
+        width: 200px;
+        top: 225px;
+        right: -50px;;
       }
       #answersContainer {
         position: relative;
@@ -112,12 +128,16 @@
         position: absolute;
         left: 50%;
         margin-left: -450px;
-        top: 230px;
+        top: 250px;
         width: 900px;
         text-align: center;
       }
       #instruct {
-        margin-top: 40px;
+        position: absolute;
+        left: 50%;
+        width: 200px;
+        margin-left: -100px;
+        top: 470px;
         height: 20px;
       }
       .wrongButton {
@@ -132,13 +152,13 @@
         position: absolute;
         left: 50%;
         margin-left: -315px;
-        top: 295px;
+        top: 314px;
         width: 630px;
         height: 95px;
-        background-color: #bdbdbd;
+        background-color: #f7f7f7;
         visibility: hidden;
         text-align: center;
-        color: #242424;
+        color: #1f1f1f;
         border-radius: 20px;
       }
       .homeButton {
@@ -150,12 +170,37 @@
         padding: 10px 10px;
         text-align: center;
         text-decoration: none;
-        width: 80px;
+        font-size: 12px;
+        width: 110px;
+        height: 40px;
         margin-left: 30px;
-        margin-top: 30px;
-        font-size: 15px;
+        left: 5%;
+        top: 30px;
       }
       .homeButton_hover:hover {
+        background: #a3a3a3;
+        border: solid 1px #a3a3a3;
+        border-radius: 20px;
+        color: #FFF;
+        outline: none;
+        cursor: pointer;
+      }
+      .leaderboardButton {
+        position: absolute;
+        background-color: #878787;
+        border: solid 1px #878787;
+        border-radius: 20px;
+        color: #FFF;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 12px;
+        width: 110px;
+        height: 40px;
+        top: 30px;
+        right: 5%;
+      }
+      .leaderboardButton_hover:hover {
         background: #a3a3a3;
         border: solid 1px #a3a3a3;
         border-radius: 20px;
@@ -189,11 +234,40 @@
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-
+      .timerContainer {
+        position: absolute;
+        left: 50%;
+        width: 600px;
+        margin-left: -300px;
+        top: 140px;
+      }
+      progress {
+        width: 100%;
+        height: 20px;
+        color: #ad42ff;
+        border-radius: 5px;
+        -webkit-appearance: progress-bar;
+      }
+      progress::-webkit-progress-bar {
+        width: 100%;
+        height: 20px;
+        border-radius: 5px;
+        background-color: #5e5e5e;
+      }
+      progress::-webkit-progress-value {
+        width: 100%;
+        height: 20px;
+        background-color: #ad42ff;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body>
+    <div class="timerContainer">
+      <progress class="time" id="time" value="0" max="5"></progress>
+    </div>
     <input class="homeButton homeButton_hover" type="button" value="HOME" id="home" onclick="window.location.href = 'index.html';">
+    <input class="leaderboardButton leaderboardButton_hover" type="button" value="LEADERBOARD" id="leaderboard" onclick="window.location.href = 'leaderboard.html';">
     <div class="container" id="container">
     <div class="container2" id="container2">
       <h5 id="instruct"></h5>
@@ -208,7 +282,9 @@
       <input class="nextButton" id="nextButton" type="button" value="Continue" onclick="return next();">
       <div id="scoreContainer">
         <h3 id="scoreLine">Score: <ins id="currentScore">0</ins></h3>
-        <h4>Lives: <ins id="lives">3</ins></h4>
+      </div>
+      <div id="livesContainer">
+        <h3 id="livesLine">Lives: <ins id="lives">3</ins></h3>
       </div>
     </div>
     </div>
@@ -235,15 +311,16 @@
     var neiDisplay = document.getElementById("neither");
     var nextDisplay = document.getElementById("nextButton");
     var defDisplay = document.getElementById("definition");
+    var progressBar = document.getElementById("time");
     var defText1;
     var defText2;
     var w1choose = "";
     var w2choose = "";
     var correctAnswer = "NEITHER";
+    var intervalTimer;
 
     function setWords() {
         document.getElementById("feedback").innerHTML = "";
-        //console.log("setWords started");
         $.ajax({
           type: "GET",
           url: "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/"+words[Math.floor(Math.random() * words.length)]+"?key=22b1d144-e9b9-42dc-aa2f-cea2b942e8d6",
@@ -261,6 +338,8 @@
         word1.innerHTML = w1choose;
         word2.innerHTML = w2choose;
         console.log("correctAnswer: " + correctAnswer);
+        intervalTimer = function(){};
+        timing();
       }
 
       function choosew2(w1choose, pick) {
@@ -436,7 +515,6 @@
 
     function answer(ansId) {
       $("#"+correctAnswer.toLowerCase()).addClass("correctButton");
-      answerId = ansId;
       synDisplay.disabled = true;
       antDisplay.disabled = true;
       neiDisplay.disabled = true;
@@ -452,32 +530,47 @@
       })
 
       display = document.getElementById("feedback");
-      if (answerId == correctAnswer.toLowerCase()) {
-        $("#" + ansId).addClass("correctButton");
-        display.style.color = "#14b000";
-        display.innerHTML = "✅";
-        currScore = parseInt(document.getElementById("currentScore").textContent);
-        var newScore = (currScore + 1).toString();
-        document.getElementById("currentScore").innerHTML = newScore;
-        nextDisplay.style.visibility = "visible";
-      }
-      else {
-        $("#" + answerId).addClass("wrongButton");
-        display.style.color = "#d90024";
-        display.innerHTML = "❌";
+      if (ansId == "timesUp") {
         currLives = parseInt(document.getElementById("lives").textContent);
         currLives--;
-        if (currLives > 0) {                                                  // More than 0 lives, keep playing
+        if (currLives > 0) {
+          display.innerHTML = "⏳❌";                                                 // More than 0 lives, keep playing
           document.getElementById("lives").innerHTML = currLives;
           nextDisplay.style.visibility = "visible";
         } else {
-          document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
-          //nextDisplay.onclick = null;
-        //  nextDisplay.onclick = "return game_end();";                        //show gameover screen on click
-          nextDisplay.setAttribute("onclick", "return game_end()")
+        display.innerHTML = "❌GAME OVER❌";
+        document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
+        nextDisplay.setAttribute("onclick", "return game_end()")
+        nextDisplay.style.visibility = "visible";
+        finalScore = parseInt(document.getElementById("currentScore").textContent);
+        }
+      } else {
+        answerId = ansId;
+
+        if (answerId == correctAnswer.toLowerCase()) {
+          $("#" + ansId).addClass("correctButton");
+
+          display.innerHTML = "🧠✅";
+          currScore = parseInt(document.getElementById("currentScore").textContent);
+          currScore++;
+          var newScore = (currScore).toString();
+          document.getElementById("currentScore").innerHTML = newScore;
           nextDisplay.style.visibility = "visible";
-          finalScore = parseInt(document.getElementById("currentScore").textContent);
-          document.getElementById("scoreLine").innerHTML = "GAME OVER! Final score: " + finalScore;
+        } else {
+          $("#" + answerId).addClass("wrongButton");
+          currLives = parseInt(document.getElementById("lives").textContent);
+          currLives--;
+          if (currLives > 0) {
+            display.innerHTML = "👎❌";                                               // More than 0 lives, keep playing
+            document.getElementById("lives").innerHTML = currLives;
+            nextDisplay.style.visibility = "visible";
+          } else {
+            display.innerHTML = "❌GAME OVER❌";
+            document.getElementById("lives").innerHTML = 0;                    // 0 lives, game over
+            nextDisplay.setAttribute("onclick", "return game_end()")
+            nextDisplay.style.visibility = "visible";
+            finalScore = parseInt(document.getElementById("currentScore").textContent);
+          }
         }
       }
     }
@@ -579,6 +672,25 @@
       return isSynonym;
     }
 
+    var intervalTimer;
+
+    function timing() {
+      var timeLeft = 0;
+      intervalTimer = setInterval(function() {
+        document.getElementById("time").value = timeLeft;
+        timeLeft += 0.01;
+        if(timeLeft >= 5) {
+          clearInterval(intervalTimer);
+          answer("timesUp");
+        }
+      }, 10);
+      $(".answerButton").click(
+        function() {
+          clearInterval(intervalTimer);
+        }
+      )
+    }
+
       //ERIC'S GAME JAVASCRIPT ABOVE
 
       //DANNY'S DATABASE FUNCTIONS BELOW
@@ -589,7 +701,8 @@
           document.getElementById("feedback").style.visibility = "hidden";
           document.getElementById("instruct").style.visibility = "hidden";
           document.getElementById("scoreContainer").style.visibility = "hidden";
-
+          document.getElementById("livesContainer").style.visibility = "hidden";
+          progressBar.style.visibility = "hidden";
           add_div();
 
       }
