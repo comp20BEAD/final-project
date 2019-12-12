@@ -22,8 +22,8 @@
       }
       #wordsContainer {
         position: relative;
-        margin-bottom: 250px;
-        margin-top: 35px;
+        margin-bottom: 100px;
+        margin-top: 100px;
       }
       .word {
         position: relative;
@@ -65,7 +65,7 @@
       }
       #answersContainer {
         position: relative;
-        margin-bottom: 30px;
+        margin-bottom: 100px;
       }
       .answerButton {
         width: 15%;
@@ -128,17 +128,18 @@
         position: absolute;
         left: 50%;
         margin-left: -450px;
-        top: 250px;
+        top: 240px;
         width: 900px;
         text-align: center;
       }
       #instruct {
         position: absolute;
         left: 50%;
-        width: 200px;
-        margin-left: -100px;
-        top: 470px;
+        width: 300px;
+        margin-left: -150px;
+        top: -85px;
         height: 20px;
+        font-size: 20px;
       }
       .wrongButton {
         background-color: #d90024;
@@ -152,10 +153,9 @@
         position: absolute;
         left: 50%;
         margin-left: -315px;
-        top: 227px;
+        top: 70px;
         width: 630px;
         height: 95px;
-
         visibility: hidden;
         text-align: center;
         color: #ffd166;
@@ -239,7 +239,7 @@
         left: 50%;
         width: 600px;
         margin-left: -300px;
-        top: 140px;
+        top: 340px;
       }
       progress {
         width: 100%;
@@ -264,7 +264,7 @@
   </head>
   <body>
     <div class="timerContainer">
-      <progress class="time" id="time" value="0" max="5"></progress>
+      <progress class="time" id="time" value="0" max="6"></progress>
     </div>
     <input class="homeButton homeButton_hover" type="button" value="HOME" id="home" onclick="window.location.href = 'index.html';">
     <input class="leaderboardButton leaderboardButton_hover" type="button" value="LEADERBOARD" id="leaderboard" onclick="window.location.href = 'leaderboard.html';">
@@ -303,7 +303,7 @@
     var word1 = document.getElementById("word1");
     var word2 = document.getElementById("word2");
     var answerId;
-    var currScore;
+    var currScore = 0;
     var finalScore;
     var currLives;
     var synDisplay = document.getElementById("synonyms");
@@ -488,6 +488,7 @@
     setWords();
 
     var showDef1 = function() {
+      document.getElementById("instruct").style.visibility = "hidden";
       $.ajax({
         type: "GET",
         url: "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word1.textContent + "?key=058036c9-eb04-4c41-b4b8-72de22609d84",
@@ -501,6 +502,7 @@
     }
 
     var showDef2 = function() {
+      document.getElementById("instruct").style.visibility = "hidden";
       $.ajax({
         type: "GET",
         url: "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word2.textContent + "?key=058036c9-eb04-4c41-b4b8-72de22609d84",
@@ -527,6 +529,7 @@
       word2.addEventListener("mouseover", showDef2);
       $(".word").mouseout(function(){
         defDisplay.style.visibility = "hidden";
+        document.getElementById("instruct").style.visibility = "visible";
       })
 
       display = document.getElementById("feedback");
@@ -676,19 +679,91 @@
 
     function timing() {
       var timeLeft = 0;
-      intervalTimer = setInterval(function() {
-        document.getElementById("time").value = timeLeft;
-        timeLeft += 0.01;
-        if(timeLeft >= 5) {
-          clearInterval(intervalTimer);
-          answer("timesUp");
-        }
-      }, 10);
-      $(".answerButton").click(
-        function() {
-          clearInterval(intervalTimer);
-        }
-      )
+      if (currScore < 5) {
+        //console.log("Max: " + progressBar.max)
+        progressBar.setAttribute("max", "6");
+        intervalTimer = setInterval(function() {
+          document.getElementById("time").value = timeLeft;
+          timeLeft += 0.01;
+          if(timeLeft >= 6) {
+            clearInterval(intervalTimer);
+            answer("timesUp");
+          }
+        }, 10);
+        $(".answerButton").click(
+          function() {
+            clearInterval(intervalTimer);
+          }
+        )
+      }
+      if (currScore >= 5 && currScore < 10) {
+        //console.log("Max: " + progressBar.max)
+        progressBar.setAttribute("max", "5");
+        intervalTimer = setInterval(function() {
+          document.getElementById("time").value = timeLeft;
+          timeLeft += 0.01;
+          if(timeLeft >= 5) {
+            clearInterval(intervalTimer);
+            answer("timesUp");
+          }
+        }, 10);
+        $(".answerButton").click(
+          function() {
+            clearInterval(intervalTimer);
+          }
+        )
+      }
+      if (currScore >= 10 && currScore < 20) {
+        console.log("Max: " + progressBar.max)
+        progressBar.setAttribute("max", "4");
+        intervalTimer = setInterval(function() {
+          document.getElementById("time").value = timeLeft;
+          timeLeft += 0.01;
+          if(timeLeft >= 4) {
+            clearInterval(intervalTimer);
+            answer("timesUp");
+          }
+        }, 10);
+        $(".answerButton").click(
+          function() {
+            clearInterval(intervalTimer);
+          }
+        )
+      }
+      if (currScore >= 20 && currScore < 40) {
+        console.log("Max: " + progressBar.max)
+        progressBar.setAttribute("max", "3");
+        intervalTimer = setInterval(function() {
+          document.getElementById("time").value = timeLeft;
+          timeLeft += 0.01;
+          if(timeLeft >= 3) {
+            clearInterval(intervalTimer);
+            answer("timesUp");
+          }
+        }, 10);
+        $(".answerButton").click(
+          function() {
+            clearInterval(intervalTimer);
+          }
+        )
+      }
+      if (currScore >= 40) {
+        console.log("Max: " + progressBar.max)
+        progressBar.setAttribute("max", "2");
+        intervalTimer = setInterval(function() {
+          document.getElementById("time").value = timeLeft;
+          timeLeft += 0.01;
+          if(timeLeft >= 2) {
+            clearInterval(intervalTimer);
+            answer("timesUp");
+          }
+        }, 10);
+        $(".answerButton").click(
+          function() {
+            clearInterval(intervalTimer);
+          }
+        )
+      }
     }
 
       //ERIC'S GAME JAVASCRIPT ABOVE
